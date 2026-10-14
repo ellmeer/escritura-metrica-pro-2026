@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#151b2d">
+<title>Escritura Métrica PRO</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0f1d;--panel:#151b2d;--panel2:#1b2237;--border:#303950;--text:#f5f7ff;--muted:#9ba6bc;--accent:#8b8bff;--accent2:#42dcc4;--grad:linear-gradient(125deg,#777aff,#b373ee);--shadow:0 18px 55px #0003;--editor:#111728;--toast:#25334b}
+body.light{color-scheme:light;--bg:#f3f5fc;--panel:#fff;--panel2:#f1f3fa;--border:#dfe4ef;--text:#182036;--muted:#63718a;--accent:#595bd9;--accent2:#158a7b;--grad:linear-gradient(125deg,#6268e8,#9466df);--shadow:0 12px 40px #26396713;--editor:#fbfcff;--toast:#e7e9ff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}button,input,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.42;cursor:not-allowed}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}::selection{background:#9892fc88}
+.container{max-width:1390px;padding:24px clamp(14px,3vw,32px) 65px;margin:auto}.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px}.brand{display:flex;align-items:center;gap:14px}.logo{height:48px;width:48px;display:grid;place-items:center;border-radius:15px;background:var(--grad);box-shadow:0 12px 24px #787aff38;font-size:25px;color:white}.brand h1{font-size:20px;letter-spacing:-.7px;margin:0;line-height:1.2}.brand p{color:var(--muted);margin:3px 0 0;font-size:12px}.topActions{display:flex;gap:9px;align-items:center}.iconButton{min-width:42px;height:42px;border-radius:13px;background:var(--panel);color:var(--text);border:1px solid var(--border);font-size:20px}.nav{display:flex;gap:7px;max-width:500px;padding:6px;border-radius:16px;background:var(--panel);border:1px solid var(--border);margin-bottom:23px}.nav button{flex:1;border:0;border-radius:11px;background:transparent;color:var(--muted);padding:10px 8px;font-weight:700;white-space:nowrap}.nav button.active{background:var(--grad);color:white;box-shadow:0 4px 15px #7475ee25}
+.hero{border-radius:22px;padding:25px 26px;margin-bottom:20px;background:linear-gradient(110deg,#4b52b8,#6654a8 60%,#4e477a);color:white;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;right:-100px;top:-160px;width:370px;height:370px;border:85px solid #ffffff13;border-radius:50%;pointer-events:none}.hero .eyebrow{font-size:11px;letter-spacing:2px;font-weight:800;text-transform:uppercase;opacity:.85}.hero h2{font-size:clamp(21px,3vw,30px);margin:6px 0;letter-spacing:-.7px}.hero p{max-width:640px;margin:0;color:#ecebff;font-size:13px}.status{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:100px;font-size:12px;font-weight:750;border:1px solid #ffffff53;background:#ffffff1b;margin-top:15px}.dot{height:8px;width:8px;border-radius:50%;background:#d5dcf8}.dot.running{background:#54ffc1;box-shadow:0 0 0 4px #54ffc124}.dot.paused{background:#fdd276}
+.grid{display:grid;grid-template-columns:minmax(0,1.42fr) minmax(300px,.88fr);gap:18px}.panel{background:var(--panel);border:1px solid var(--border);border-radius:19px;box-shadow:var(--shadow);padding:20px;min-width:0}.panel h3{margin:0;font-size:16px;letter-spacing:-.2px}.subtle{color:var(--muted);font-size:12px}.heading{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:15px}.editorTitle{border:0;background:none;color:var(--text);font-weight:800;font-size:18px;padding:4px 0;max-width:100%;width:100%}.editorTitle:focus{outline:none;border-bottom:1px solid var(--accent)}textarea.mainEditor{background:var(--editor);color:var(--text);padding:20px;resize:vertical;border:1px solid var(--border);width:100%;min-height:390px;border-radius:15px;line-height:1.75;font-size:17px;letter-spacing:.1px}.textareaFoot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;color:var(--muted);font-size:12px;margin:10px 2px 0}.buttonRow{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.btn{border:1px solid var(--border);color:var(--text);background:var(--panel2);border-radius:12px;padding:10px 14px;font-size:13px;font-weight:800;min-height:41px;transition:filter .15s,transform .15s}.btn:hover:not(:disabled){filter:brightness(1.09)}.btn:active:not(:disabled){transform:scale(.985)}.btn.primary{background:var(--grad);color:white;border-color:transparent}.btn.success{background:#0e947b;color:white;border-color:transparent}.btn.danger{color:#ff8799}.btn.mini{font-size:12px;min-height:35px;padding:7px 11px}.sessionBar{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;align-items:center;padding:14px 0 16px}.time{font-size:32px;letter-spacing:1px;font-weight:850;font-variant-numeric:tabular-nums;line-height:1.1}.timeLabel{color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase}.kpiGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.kpi{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:15px;min-width:0}.kpi .value{font-size:clamp(22px,2.6vw,32px);font-weight:850;letter-spacing:-.9px;font-variant-numeric:tabular-nums;line-height:1.3}.kpi .name{color:var(--muted);font-size:12px}.kpi.emph{background:linear-gradient(145deg,#726bfa18,#725be522);border-color:#7a76d95e}.kpi.emph .value{color:var(--accent)}.kpiWide{grid-column:span 2;display:flex;align-items:center;justify-content:space-between;gap:10px}.kpiWide .value{font-size:23px}.inlineChip{font-size:11px;padding:4px 8px;border-radius:10px;background:#49cbaa20;color:var(--accent2);font-weight:800}.hint{font-size:12px;color:var(--muted);margin-top:12px}.twoColumns{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.progressGroup{margin-top:16px}.progressHead{display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px}.progressHead span:last-child{color:var(--muted)}.progressTrack{height:9px;border-radius:20px;background:var(--panel2);overflow:hidden;border:1px solid var(--border)}.progressFill{height:100%;width:0%;background:var(--grad);transition:width .3s;border-radius:20px}.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field label{font-size:12px;font-weight:750;color:var(--muted)}.field input,.field textarea{width:100%;background:var(--editor);border:1px solid var(--border);color:var(--text);border-radius:11px;padding:11px 12px;min-height:43px}.field textarea{min-height:84px;resize:vertical}.statsList{display:grid;grid-template-columns:1fr 1fr;gap:10px}.statItem{padding:12px;background:var(--panel2);border-radius:12px;min-width:0}.statItem strong{display:block;font-size:19px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.statItem span{font-size:12px;color:var(--muted)}.barChart{display:flex;align-items:flex-end;gap:10px;height:190px;overflow-x:auto;border-bottom:1px solid var(--border);padding:12px 8px 0;scrollbar-color:var(--border) transparent}.chartCol{flex:1 0 28px;max-width:72px;min-width:28px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px}.barValue{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}.barHolder{display:flex;align-items:flex-end;flex:1;width:100%;justify-content:center;min-height:10px}.bar{min-height:3px;width:80%;max-width:45px;border-radius:7px 7px 0 0;background:var(--grad);transition:height .2s}.barName{font-size:11px;color:var(--muted);height:18px;white-space:nowrap}.letterList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.letterItem{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:9px 11px;min-width:0}.letterLine{display:flex;justify-content:space-between;gap:10px;font-size:12px;margin-bottom:6px}.letterLine b{font-size:15px}.letterLine span{color:var(--muted)}.miniTrack{height:4px;background:var(--border);border-radius:10px;overflow:hidden}.miniFill{height:100%;background:var(--accent2);border-radius:10px}.wordChips{display:flex;flex-wrap:wrap;gap:7px}.wordChip{background:var(--panel2);color:var(--text);padding:6px 10px;border:1px solid var(--border);border-radius:9px;font-size:12px;overflow-wrap:anywhere}.wordChip b{color:var(--accent);margin-left:5px}.separator{border:0;border-top:1px solid var(--border);margin:17px 0}.manualBig{display:grid;grid-template-columns:1fr 1fr;gap:18px}.manualIntro{font-size:14px;color:var(--muted);margin:0 0 17px}.manualTime{font-size:clamp(46px,7vw,78px);font-weight:900;letter-spacing:-2px;line-height:1.1;font-variant-numeric:tabular-nums;margin:8px 0 17px}.manualHighlights{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}.manualHighlights>div{border-radius:15px;background:var(--panel2);padding:16px;border:1px solid var(--border)}.manualHighlights b{font-size:30px;display:block;color:var(--accent)}.manualHighlights span{color:var(--muted);font-size:12px}.history{display:grid;gap:10px}.historyCard{border:1px solid var(--border);background:var(--panel2);border-radius:14px;padding:15px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.historyCard strong{display:block}.historyCard small{display:block;color:var(--muted);margin-top:4px}.historyMetric{font-size:13px;white-space:nowrap}.historyMetric b{color:var(--accent)}.empty{text-align:center;padding:28px 15px;border:1px dashed var(--border);border-radius:14px;color:var(--muted);font-size:13px}.footNote{text-align:center;color:var(--muted);font-size:12px;margin-top:25px}.toast{position:fixed;bottom:25px;left:50%;transform:translate(-50%,25px);opacity:0;transition:.2s;pointer-events:none;z-index:10;background:var(--toast);color:var(--text);padding:12px 17px;border-radius:12px;box-shadow:0 10px 30px #0005;font-size:13px;max-width:85vw}.toast.show{opacity:1;transform:translate(-50%,0)}.tab{display:none}.tab.active{display:block}.sectionLead{margin:0 0 18px;color:var(--muted);font-size:13px}.settingRow{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;align-items:center}.mark{color:var(--accent2);font-size:11px;font-weight:800}.miniHeading{color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-size:11px;font-weight:800;margin:0 0 7px}.stack{display:grid;gap:18px}.footerNote{color:var(--muted);font-size:12px;margin:10px 0 0}
+@media(max-width:980px){.grid{grid-template-columns:1fr}.twoColumns{grid-template-columns:1fr 1fr}.manualBig{grid-template-columns:1fr}.hero{padding:21px}.panel{padding:17px}}
+@media(max-width:680px){.container{padding-top:14px}.topbar{margin-bottom:17px}.brand h1{font-size:17px}.brand p{font-size:10px}.logo{width:42px;height:42px}.nav{max-width:100%;margin-bottom:16px}.nav button{font-size:12px;padding:10px 2px}.hero{border-radius:17px;padding:19px}.twoColumns{grid-template-columns:1fr}.formGrid{grid-template-columns:1fr 1fr}.panel{border-radius:16px}.manualHighlights b{font-size:24px}.time{font-size:28px}.btn{padding:9px 11px}.buttonRow{gap:7px}.letterList{grid-template-columns:repeat(2,1fr)}textarea.mainEditor{min-height:310px;font-size:16px}.sessionBar{align-items:flex-start}.historyCard{align-items:flex-start}}
+@media(max-width:375px){.formGrid{grid-template-columns:1fr}.kpiGrid{gap:8px}.kpi{padding:12px}.kpi .value{font-size:23px}}
+/* Taller creativo: personajes, mapas conceptuales y capítulos */
+.nav{max-width:100%;width:100%;overflow-x:auto;scrollbar-width:thin}
+.nav button{flex:1 0 auto;min-width:100px}
+.workspaceIntro{margin-bottom:16px}
+.workspaceGrid{display:grid;grid-template-columns:minmax(280px,.82fr) minmax(0,1.45fr);gap:18px;align-items:start}
+.workspaceGrid.reverse{grid-template-columns:minmax(270px,.65fr) minmax(0,1.5fr)}
+.stackSmall{display:grid;gap:14px}
+.workspaceToolbar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;justify-content:space-between;margin-bottom:15px}
+.workspaceToolbar .field{flex:1;min-width:180px}
+.workspaceToolbar select,.field select,.mapForm select{width:100%;background:var(--editor);border:1px solid var(--border);color:var(--text);border-radius:11px;padding:11px 12px;min-height:43px;font:inherit}
+.workspaceToolbar input{width:100%;background:var(--editor);border:1px solid var(--border);color:var(--text);border-radius:11px;padding:11px 12px;min-height:43px}
+.fullField{grid-column:1/-1}
+.characterCards{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:12px}
+.characterCard{border:1px solid var(--border);background:var(--panel2);border-radius:16px;padding:16px;min-width:0}
+.characterHead{display:flex;gap:11px;align-items:center;margin-bottom:12px}
+.characterAvatar{height:45px;width:45px;flex:none;border-radius:13px;display:grid;place-items:center;color:#fff;font-size:23px;font-weight:850}
+.characterHead strong{display:block;line-height:1.3;overflow-wrap:anywhere}
+.characterHead small{display:block;color:var(--muted);font-size:12px}
+.characterSummary{font-size:12px;color:var(--muted);min-height:38px;white-space:pre-line;overflow-wrap:anywhere}
+.characterMeta{display:flex;flex-wrap:wrap;gap:6px;margin:9px 0 13px}
+.characterTag{border:1px solid var(--border);border-radius:8px;padding:2px 7px;font-size:11px}
+.characterCard .buttonRow{gap:6px}
+.charactersEmpty{grid-column:1/-1}
+.sectionHint{font-size:12px;color:var(--muted);margin:10px 0 0}
+.mapGrid{display:grid;grid-template-columns:285px minmax(0,1fr);gap:16px;align-items:start}
+.mapSidebar{display:grid;gap:14px}
+.mapSidebar .panel{padding:16px}
+.mapViewport{border:1px solid var(--border);background:var(--editor);border-radius:17px;overflow:auto;height:min(67vh,680px);min-height:420px;overscroll-behavior:contain;touch-action:pan-x pan-y;scrollbar-width:thin;position:relative}
+.mapCanvas{width:1440px;height:940px;position:relative;overflow:hidden;background-color:var(--editor);background-image:radial-gradient(circle,var(--border) 1px,transparent 1.6px);background-size:25px 25px}
+.mapLines{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.conceptNode{position:absolute;width:202px;min-height:95px;border:2px solid var(--nodeColor,#7474ef);background:var(--panel);border-radius:16px;box-shadow:0 12px 27px #0003;user-select:none;touch-action:none;cursor:grab;padding:11px 12px;display:flex;flex-direction:column;gap:3px;justify-content:center;z-index:1;overflow-wrap:anywhere;overflow:hidden}
+.conceptNode:active{cursor:grabbing}
+.conceptNode.selected{outline:3px solid var(--accent2);outline-offset:2px;z-index:4}
+.conceptNode.connectSelected{outline:4px solid #f3c969;outline-offset:3px;z-index:3}
+.conceptNode strong{font-size:13px;line-height:1.25;display:block;max-height:38px;overflow:hidden}
+.conceptNode small{font-size:11px;color:var(--muted);line-height:1.2;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.nodeStripe{position:absolute;inset:0 auto 0 0;width:6px;background:var(--nodeColor,#777aff)}
+.mapCounter{font-size:12px;color:var(--muted)}
+.mapActions{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.mapActions button{flex:1 1 auto}
+.mapLegend{margin-top:10px;color:var(--muted);font-size:12px}
+.mapLegend b{color:var(--text)}
+.colorChoices{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.colorChoice{width:30px;height:30px;border-radius:10px;border:2px solid transparent;background:var(--swatch);padding:0}
+.colorChoice.active{outline:2px solid var(--text);outline-offset:2px}
+.mapForm textarea{min-height:65px}
+.mapHeaderCard .heading{margin-bottom:8px}
+.connectionList{display:grid;gap:8px;max-height:240px;overflow-y:auto}
+.connectionItem{display:flex;align-items:center;gap:7px;justify-content:space-between;font-size:12px;border:1px solid var(--border);border-radius:10px;padding:7px 8px;overflow-wrap:anywhere}
+.connectionItem span{min-width:0;flex:1}
+.connectionItem button{background:transparent;border:0;color:#f18d9c;padding:5px;font-size:15px}
+.chapterRows{display:grid;gap:10px}
+.chapterRow{display:grid;grid-template-columns:45px minmax(0,1fr) auto;align-items:center;gap:12px;background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:13px}
+.chapterIndex{height:42px;width:42px;border-radius:12px;background:var(--grad);color:white;display:grid;place-items:center;font-weight:800}
+.chapterRow strong{display:block;overflow-wrap:anywhere}
+.chapterRow small{color:var(--muted);display:block;margin:4px 0 0;overflow-wrap:anywhere}
+.chapterButtons{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+.chapterButtons .btn{min-width:35px}
+.chapterBadge{font-size:11px;color:var(--accent2);border:1px solid var(--border);padding:3px 6px;border-radius:7px;display:inline-block;margin-top:6px}
+.workspaceNumbers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:17px}
+.workspaceNumbers>div{padding:13px;border:1px solid var(--border);border-radius:12px;background:var(--panel2)}
+.workspaceNumbers strong{display:block;font-size:22px}
+.workspaceNumbers span{display:block;font-size:11px;color:var(--muted)}
+@media(max-width:1000px){.workspaceGrid,.workspaceGrid.reverse,.mapGrid{grid-template-columns:1fr}}
+@media(max-width:680px){.nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin-bottom:17px;overflow:visible}.nav button{font-size:11px;min-width:0;padding:10px 3px;white-space:normal}.characterCards{grid-template-columns:1fr}.chapterRow{grid-template-columns:36px minmax(0,1fr);gap:9px}.chapterIndex{height:35px;width:35px}.chapterButtons{grid-column:2;justify-content:flex-start}.mapViewport{min-height:390px;height:52vh}.workspaceNumbers{gap:7px}.workspaceNumbers>div{padding:9px}.workspaceNumbers strong{font-size:20px}}
+
+
+/* v3: estudio de escritura de pantalla completa, totalmente sin dependencias */
+:root{--navH:76px;--topH:63px}
+html,body{width:100%;height:100%;overflow:hidden;overscroll-behavior:none}
+body{min-height:0}
+.container{height:100vh;height:100dvh;min-height:0;max-width:none;margin:0;padding:0;display:flex;flex-direction:column;overflow:hidden}
+.topbar{order:0;min-height:var(--topH);max-height:var(--topH);flex:none;margin:0;padding:10px clamp(14px,2.8vw,34px);border-bottom:1px solid var(--border);background:var(--panel);z-index:8}
+.topbar .logo{height:41px;width:41px;border-radius:13px;font-size:23px}
+.brand h1{font-size:17px}.brand p{font-size:11px}
+.nav.bottomNav{order:20;position:relative;max-width:none;width:100%;min-height:var(--navH);height:var(--navH);margin:0;padding:7px 10px max(7px,env(safe-area-inset-bottom));display:flex;align-items:stretch;justify-content:center;gap:5px;border-radius:0;border:0;border-top:1px solid var(--border);box-shadow:0 -10px 25px #0002;background:var(--panel);overflow:visible;z-index:15;scrollbar-width:none}
+.nav.bottomNav .navItem{flex:1 1 0;min-width:0;max-width:150px;border-radius:13px;color:var(--muted);background:none;box-shadow:none;padding:6px 2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;font-weight:750;line-height:1.2;white-space:nowrap;transition:background .18s,color .18s}
+.nav.bottomNav .navItem.active{color:#fff;background:var(--grad);box-shadow:0 4px 18px #7b78e44a}
+.navIcon{flex:none}.nav.bottomNav .navHidden{display:none!important}
+.moreMenu{position:fixed;z-index:31;right:clamp(12px,3vw,32px);bottom:calc(var(--navH) + 9px);width:min(340px,calc(100vw - 24px));background:var(--panel);border:1px solid var(--border);box-shadow:0 18px 60px #0008;border-radius:19px;padding:13px;max-height:min(72dvh,450px);overflow:auto}
+.moreMenu[hidden]{display:none!important}.moreTitle{margin:2px 8px 9px;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.8px;font-weight:850}
+.moreMenu>button{border:0;background:transparent;display:flex;gap:12px;align-items:center;text-align:left;width:100%;color:var(--text);border-radius:12px;padding:12px 9px;font-size:14px;font-weight:800}
+.moreMenu>button:hover,.moreMenu>button:focus-visible{background:var(--panel2)}.moreMenu>button>span:first-child{font-size:23px;display:grid;place-items:center;width:38px;height:38px;border-radius:11px;background:var(--panel2)}.moreMenu>button>span:nth-child(2){flex:1}.moreMenu small{display:block;font-size:11px;font-weight:500;color:var(--muted)}
+.menuTip{border-top:1px solid var(--border);padding:10px 8px 2px;color:var(--muted);font-size:12px}
+.tab{display:none;min-height:0;order:5;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:20px clamp(12px,3vw,34px) 35px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;flex:1}
+.tab.active{display:block}.tab>*{max-width:1320px;margin-left:auto;margin-right:auto}.tab .hero{margin-bottom:16px}
+#tab-write{padding-top:12px}#tab-write>.hero{display:none}
+#tab-write .studioLayout{display:block;max-width:1020px;margin:0 auto}
+#tab-write .studioLayout>.stack{display:block}
+#tab-write .studioLayout>.stack>.panel{padding:clamp(13px,2vw,20px);box-shadow:none}
+#tab-write .panel:has(#editor)>.heading{align-items:center;margin-bottom:8px}
+#tab-write .panel:has(#editor) .editorTitle{font-size:18px}
+#tab-write .panel:has(#editor) .time{font-size:23px;white-space:nowrap}
+#tab-write .panel:has(#editor) .settingRow{border-top:1px solid var(--border);padding-top:8px;margin-top:6px}
+#tab-write .panel:has(#editor) .settingRow h3{font-size:14px}
+#tab-write .panel:has(#editor) .sessionBar{padding:7px 0 13px}
+#tab-write .panel:has(#editor) textarea.mainEditor{height:clamp(290px,45dvh,580px);min-height:240px;resize:vertical}
+#tab-write .panel:has(#editor) .hint{margin-bottom:0}
+.quickStats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;max-width:1020px;margin:0 auto 12px;position:relative;z-index:1}
+.quickItem{min-width:0;display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:8px;align-items:center;background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:10px 14px}
+.quickIcon{grid-row:span 2;display:grid;place-items:center;height:34px;width:34px;border-radius:10px;background:#7878ef20;color:var(--accent);font-size:17px;font-weight:900}
+.quickItem strong{font-size:23px;line-height:1.18;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+.quickItem small{font-size:11px;color:var(--muted);line-height:1.3}
+.advancedAnalytics{max-width:1020px;margin:14px auto 0;border:1px solid var(--border);border-radius:19px;background:var(--panel);overflow:hidden}
+.advancedAnalytics>summary{display:flex;align-items:center;gap:12px;cursor:pointer;list-style:none;padding:15px 17px;font-weight:800;min-height:59px}
+.advancedAnalytics>summary::-webkit-details-marker{display:none}
+.advancedAnalytics>summary:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+.foldSymbol{font-size:23px;color:var(--accent);line-height:1}.advancedAnalytics>summary b{display:block}.advancedAnalytics>summary small{font-size:11px;color:var(--muted);font-weight:500;display:block}.foldArrow{margin-left:auto;font-size:22px;transition:transform .2s}.advancedAnalytics[open] .foldArrow{transform:rotate(180deg)}
+.advancedGrid{border-top:1px solid var(--border);padding:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}
+.advancedGrid>.panel{box-shadow:none;padding:16px}.advancedGrid>.panel:has(#letters){grid-row:span 2}.advancedGrid>.panel:has(#minuteChart){grid-column:span 2}
+#tab-write .quickStats{position:sticky;top:-12px;z-index:7;padding-top:0}
+.footNote{display:none}.toast{bottom:calc(var(--navH) + 13px);z-index:32}
+@media(max-width:850px){
+ :root{--navH:76px;--topH:58px}
+ .topbar{padding:7px 13px}.topbar .logo{width:38px;height:38px}.brand{gap:10px}.brand h1{font-size:16px}.brand p{font-size:10px}
+ .tab{padding:11px 11px 24px}
+ .tab .hero{padding:13px 16px;border-radius:14px;margin-bottom:11px}
+ .tab .hero .eyebrow{font-size:10px;letter-spacing:1px}
+ .tab .hero h2{font-size:19px;margin:2px 0}
+ .tab .hero p{display:none}.tab .hero .status{display:none}
+ #tab-write>.hero{display:none}
+ #tab-write .studioLayout>.stack>.panel{border-radius:14px;padding:12px}
+ #tab-write .panel:has(#editor) .editorTitle{font-size:16px}
+ #tab-write .panel:has(#editor) .settingRow h3{font-size:12px}
+ #tab-write .panel:has(#editor) .time{font-size:21px}
+ #tab-write .panel:has(#editor) .timeLabel{font-size:10px}
+ #tab-write .panel:has(#editor) .sessionBar>.buttonRow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+ #tab-write .panel:has(#editor) .sessionBar>.buttonRow .btn{padding:9px 3px;min-width:0;font-size:11px;line-height:1.2}
+ #tab-write .panel:has(#editor) .sessionBar>#autoReset{float:right;margin:6px 0 0;font-size:11px;padding:5px 9px;min-height:29px}
+ #tab-write .panel:has(#editor) .sessionBar:after{content:"";display:block;clear:both}
+ #tab-write .panel:has(#editor) .heading{margin-bottom:6px}
+ #tab-write .panel:has(#editor) .heading #saveLabel{white-space:nowrap;font-size:10px}
+ #tab-write .panel:has(#editor) textarea.mainEditor{height:clamp(235px,39dvh,480px);min-height:190px;resize:vertical;border-radius:12px;padding:13px;font-size:16px;line-height:1.6}
+ #tab-write .panel:has(#editor) .textareaFoot{font-size:10px;margin-top:5px}
+ #tab-write .panel:has(#editor) .textareaFoot span:last-child{display:none}
+ #tab-write .panel:has(#editor) .separator{margin:8px 0}
+ #tab-write .panel:has(#editor)>.buttonRow .btn{flex:1 1 auto;min-height:36px}
+ #tab-write .panel:has(#editor) .hint{font-size:10px;line-height:1.35}
+ .quickStats{gap:5px;margin:0 auto 8px;top:-11px;background:var(--bg);padding:0 0 2px}
+ .quickItem{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:0;padding:7px 1px 5px;border-radius:12px}
+ .quickIcon{display:none}.quickItem strong{font-size:19px;max-width:100%}.quickItem small{font-size:10px}
+ .advancedGrid{grid-template-columns:1fr;padding:9px;gap:9px}
+ .advancedGrid>.panel:has(#minuteChart){grid-column:auto}.advancedGrid>.panel:has(#letters){grid-row:auto}
+ .mapGrid{display:flex;flex-direction:column}.mapGrid>section.panel{order:0}.mapGrid>.mapSidebar{order:1}
+ .mapViewport{height:clamp(330px,48dvh,560px);min-height:310px}
+ .mapSidebar>.panel{padding:14px}
+ .workspaceGrid,.workspaceGrid.reverse,.twoColumns{display:grid;grid-template-columns:1fr;gap:10px}
+ .workspaceNumbers{margin-bottom:11px}
+ .workspaceIntro{margin-bottom:10px}
+ .panel{padding:13px;border-radius:14px;box-shadow:none}
+ .nav.bottomNav{padding:6px 4px max(6px,env(safe-area-inset-bottom));gap:2px;grid-template-columns:none}
+ .nav.bottomNav .navItem{padding:4px 0;gap:4px;font-size:10px;min-width:0}
+ .navIcon{width:21px;height:21px}
+ .manualBig{gap:10px}.manualTime{font-size:52px}
+ .formGrid{gap:10px}
+}
+@media(max-width:365px){.nav.bottomNav .navItem{font-size:9px}.navIcon{width:20px;height:20px}.quickItem strong{font-size:17px}.quickItem small{font-size:9px}.brand p{display:none}#tab-write .panel:has(#editor) .sessionBar>.buttonRow .btn{font-size:10px}}
+@media(max-height:650px) and (max-width:850px){:root{--navH:67px;--topH:51px}.brand p{display:none}.nav.bottomNav .navItem{gap:1px}.quickItem{padding:5px 1px}#tab-write .panel:has(#editor) textarea.mainEditor{height:30dvh;min-height:140px}}
+
+@media(max-width:390px){.topbar .logo{height:34px;width:34px}.brand{gap:7px}.brand h1{font-size:14px}.topActions{gap:5px}.iconButton{min-width:38px;height:38px}.brand p{display:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+
+.backupBox{display:flex;flex-direction:column;gap:9px;padding:13px;border:1px solid var(--border);background:var(--panel2);border-radius:14px;margin:14px 0}.backupBadge{display:flex;align-items:center;gap:11px}.backupBadge>span:first-child{display:grid;place-items:center;width:35px;height:35px;border-radius:10px;background:#17a78925;color:var(--accent2);font-weight:900}.backupBadge>span:last-child{display:flex;flex-direction:column;min-width:0}.backupBadge b{font-size:13px}.backupBadge small{font-size:11px;color:var(--muted)}.backupToggle{display:flex;align-items:flex-start;gap:12px;border-radius:12px;padding:12px 10px;margin:10px 0 14px;background:var(--panel2);cursor:pointer}.backupToggle input{width:19px;height:19px;accent-color:var(--accent);flex-shrink:0;margin-top:2px}.backupToggle span{display:flex;flex-direction:column;gap:3px}.backupToggle b{font-size:13px}.backupToggle small{font-size:11px;color:var(--muted)}.backupAdvanced{border-top:1px solid var(--border);margin-top:15px;padding-top:13px}.backupAdvanced>summary{font-weight:700;font-size:12px;color:var(--muted);cursor:pointer;min-height:32px}.backupAdvanced p{margin:7px 0 12px}
+</style>
+</head>
+<body>
+<div class="container">
+<header class="topbar">
+  <div class="brand"><div class="logo" aria-hidden="true">✍</div><div><h1>Escritura Métrica <span style="color:var(--accent)">PRO</span></h1><p>Tu estudio personal de escritura · sin conexión</p></div></div>
+  <div class="topActions"><button class="iconButton" id="statsShortcut" type="button" aria-label="Abrir estadísticas" title="Ver estadísticas">▥</button><button class="iconButton" id="themeBtn" type="button" title="Cambiar tema" aria-label="Cambiar tema">☀</button></div>
+</header>
+<nav class="nav bottomNav" aria-label="Herramientas principales"><button type="button" class="navItem active" data-tab="write" aria-label="Abrir editor" aria-current="page"><svg class="navIcon" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L9 17l-4 1 1-4Z"/></svg><span>Editor</span></button><button type="button" class="navItem" data-tab="manual" aria-label="Abrir manual" aria-current="false"><svg class="navIcon" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6M19 5l2 2"/></svg><span>Manual</span></button><button type="button" class="navItem" data-tab="characters" aria-label="Abrir personajes" aria-current="false"><svg class="navIcon" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 21v-2a6 6 0 0 1 12 0v2M17 5a3 3 0 0 1 0 6M21 21v-2a6 6 0 0 0-4-5.65"/></svg><span>Personajes</span></button><button type="button" class="navItem" data-tab="map" aria-label="Abrir mapas" aria-current="false"><svg class="navIcon" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><path d="M7 5h10M6 7l5 10M18 7l-5 10"/></svg><span>Mapas</span></button><button type="button" class="navItem" data-tab="outline" aria-label="Abrir capítulos" aria-current="false"><svg class="navIcon" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h11a2 2 0 0 1 2 2v16H7a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3Z"/><path d="M4 17a3 3 0 0 1 3-3h13M10 8h6M10 11h4"/></svg><span>Capítulos</span></button><button type="button" class="navItem moreNav" id="moreNav" aria-label="Mostrar más herramientas" aria-expanded="false" aria-controls="moreMenu"><svg class="navIcon" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg><span>Más</span></button><button type="button" class="navHidden" data-tab="history" tabindex="-1" aria-hidden="true">Historial</button><button type="button" class="navHidden" data-tab="settings" tabindex="-1" aria-hidden="true">Metas</button></nav><div id="moreMenu" class="moreMenu" hidden><p class="moreTitle">Más herramientas</p><button type="button" data-tab="history"><span aria-hidden="true">▤</span><span>Historial de escritura<small>Sesiones y estadísticas</small></span><span aria-hidden="true">›</span></button><button type="button" data-tab="settings"><span aria-hidden="true">⚙</span><span>Metas y copias de seguridad<small>Protección automática</small></span><span aria-hidden="true">›</span></button><div class="menuTip">Tus textos se guardan en este dispositivo.</div></div>
+
+<section id="tab-write" class="tab active">
+  <div class="hero"><div class="eyebrow">Estudio de productividad</div><h2>Escribe. Mide. Mejora.</h2><p>Cuenta tus palabras, cada letra añadida y tu velocidad real por minuto. Las estadísticas del documento cambian mientras escribes; la velocidad se mide durante el cronómetro.</p><div class="status"><span id="autoDot" class="dot"></span><span id="autoStatus">Cronómetro sin iniciar</span></div></div>
+<div class="quickStats" aria-label="Estadísticas rápidas en tiempo real">
+  <div class="quickItem"><span class="quickIcon" aria-hidden="true">✎</span><strong id="quickWords">0</strong><small>Palabras</small></div>
+  <div class="quickItem"><span class="quickIcon" aria-hidden="true">Aa</span><strong id="quickLetters">0</strong><small>Letras</small></div>
+  <div class="quickItem"><span class="quickIcon" aria-hidden="true">↗</span><strong id="quickPpm">0</strong><small>PPM</small></div>
+  <div class="quickItem"><span class="quickIcon" aria-hidden="true">◷</span><strong id="quickTime">00:00</strong><small>Tiempo</small></div>
+</div>
+  <div class="grid studioLayout">
+    <div class="stack">
+      <section class="panel">
+        <div class="heading"><div style="flex:1;min-width:0"><p class="miniHeading">Tu documento</p><input id="docTitle" class="editorTitle" aria-label="Título del documento" maxlength="120" value="Mi escritura"></div><span class="mark" id="saveLabel">● Guardado local</span></div>
+        <div class="settingRow"><h3>Sesión de escritura</h3><div><div class="timeLabel">Tiempo activo</div><div class="time" id="autoClock">00:00</div></div></div>
+        <div class="sessionBar"><div class="buttonRow"><button type="button" class="btn primary" id="autoStart">▶ Iniciar</button><button type="button" class="btn" id="autoPause" disabled>Ⅱ Pausar</button><button type="button" class="btn success" id="autoFinish" disabled>✓ Guardar sesión</button></div><button type="button" class="btn danger mini" id="autoReset">↻ Reiniciar medición</button></div>
+        <textarea id="editor" class="mainEditor" spellcheck="true" placeholder="Comienza a escribir aquí tu cuento, diario, novela, ensayo o lo que imagines..."></textarea>
+        <div class="textareaFoot"><span id="editorFoot">0 palabras · 0 letras</span><span>Los textos se guardan en este navegador</span></div>
+        <hr class="separator">
+        <div class="buttonRow"><button type="button" class="btn mini" id="newDoc">＋ Nuevo texto</button><button type="button" class="btn mini" id="importText">↑ Abrir TXT</button><button type="button" class="btn mini" id="exportText">↓ Descargar TXT</button></div>
+        <input type="file" id="fileInput" accept=".txt,text/plain" hidden>
+        <p class="hint">La medición solo avanza cuando el cronómetro está en marcha. El texto pegado cuenta en el documento, pero no como escritura tecleada.</p>
+      </section>
+      <section class="panel"><div class="heading"><div><h3>Producción por minuto</h3><span class="subtle">Palabras o letras añadidas mientras el cronómetro estaba activo</span></div><span class="mark" id="bestMinute">Mejor minuto: —</span></div><div class="buttonRow"><button type="button" class="btn primary mini" id="chartWords">Palabras</button><button type="button" class="btn mini" id="chartLetters">Letras</button></div><div class="barChart" id="minuteChart"></div><p class="footerNote">Un minuto parcial también aparece. Las correcciones pueden afectar el conteo de palabras nuevas.</p></section>
+      <section class="panel"><div class="heading"><div><h3>Estadísticas del documento</h3><span class="subtle">Análisis de todo lo que permanece escrito</span></div></div><div class="statsList" id="detailedStats"></div></section>
+    </div>
+    <div class="stack">
+      <section class="panel"><div class="heading"><div><h3>Panel en vivo</h3><span class="subtle">Contenido y productividad actual</span></div><span class="mark">EN DIRECTO</span></div>
+        <div class="kpiGrid">
+          <div class="kpi"><div class="name">Palabras del documento</div><div class="value" id="docWords">0</div></div>
+          <div class="kpi"><div class="name">Letras del documento</div><div class="value" id="docLetters">0</div></div>
+          <div class="kpi emph"><div class="name">Palabras por minuto (PPM)</div><div class="value" id="autoWpm">0</div></div>
+          <div class="kpi emph"><div class="name">Letras por minuto (LPM)</div><div class="value" id="autoLpm">0</div></div>
+          <div class="kpi kpiWide"><div><div class="name">Palabras añadidas en esta sesión</div><div class="value" id="autoWordsAdded">0</div></div><span class="inlineChip">Sesión</span></div>
+          <div class="kpi"><div class="name">Letras añadidas</div><div class="value" id="autoLettersAdded">0</div></div>
+          <div class="kpi"><div class="name">Caracteres eliminados</div><div class="value" id="autoDeleted">0</div></div>
+        </div>
+      </section>
+      <section class="panel"><h3>Mis metas</h3><span class="subtle">Según las metas que establezcas</span><div class="progressGroup"><div class="progressHead"><strong>Palabras del texto</strong><span id="wordGoalLabel">0 / 500</span></div><div class="progressTrack"><div class="progressFill" id="wordProgress"></div></div></div><div class="progressGroup"><div class="progressHead"><strong>Minutos de escritura</strong><span id="timeGoalLabel">0 / 25 min</span></div><div class="progressTrack"><div class="progressFill" id="timeProgress"></div></div></div></section>
+      <section class="panel"><div class="heading"><div><h3>Frecuencia de cada letra</h3><span class="subtle">Cada letra del texto, incluso tildes y ñ</span></div></div><div id="letters" class="letterList"></div></section>
+      <section class="panel"><h3>Palabras más frecuentes</h3><p class="sectionLead">Las 12 palabras que más aparecen en el documento</p><div class="wordChips" id="topWords"></div></section>
+    </div>
+  </div>
+</section>
+
+<section id="tab-manual" class="tab">
+  <div class="hero"><div class="eyebrow">Cronómetro independiente</div><h2>¿Escribes en papel o en otra aplicación?</h2><p>Activa el cronómetro, escribe donde quieras y anota aquí cuántas palabras hiciste. La velocidad se calcula a partir del tiempo que hayas medido.</p><div class="status"><span class="dot" id="manualDot"></span><span id="manualStatus">Cronómetro sin iniciar</span></div></div>
+  <div class="manualBig">
+    <section class="panel"><p class="miniHeading">Tu cronómetro manual</p><div id="manualClock" class="manualTime">00:00</div><div class="buttonRow"><button id="manualStart" type="button" class="btn primary">▶ Iniciar</button><button id="manualPause" type="button" class="btn" disabled>Ⅱ Pausar</button><button id="manualFinish" type="button" class="btn success" disabled>✓ Guardar sesión</button><button id="manualReset" type="button" class="btn danger">↻ Reiniciar</button></div><hr class="separator"><div class="formGrid"><div class="field"><label for="manualWords">Cantidad de palabras escritas</label><input type="number" id="manualWords" min="0" max="10000000" step="1" inputmode="numeric" placeholder="Ej. 250"></div><div class="field"><label for="manualLetters">Letras escritas (opcional)</label><input type="number" id="manualLetters" min="0" max="100000000" step="1" inputmode="numeric" placeholder="Ej. 1300"></div></div><div class="field" style="margin-top:12px"><label for="manualNote">Descripción de la sesión (opcional)</label><input type="text" id="manualNote" maxlength="120" placeholder="Ej. Escribí un capítulo en mi cuaderno"></div><p class="hint">Puedes cambiar las cantidades mientras el cronómetro funciona o después de pausarlo. El tiempo detenido no cuenta.</p></section>
+    <section class="panel"><div class="heading"><div><h3>Estadísticas manuales</h3><span class="subtle">Calculadas con tus cantidades introducidas</span></div></div><div class="manualHighlights"><div><span>Palabras por minuto</span><b id="manualWpm">0</b></div><div><span>Letras por minuto</span><b id="manualLpm">—</b></div><div><span>Palabras por hora</span><b id="manualWph">0</b></div><div><span>Segundos por palabra</span><b id="manualSpw">—</b></div></div><hr class="separator"><p class="miniHeading">Cómo se calcula</p><p class="sectionLead">Palabras por minuto = palabras escritas ÷ minutos activos. Por ejemplo, 100 palabras en 5 minutos equivalen a 20 PPM.</p><p class="footerNote">Los números manuales son declarados por ti. La aplicación no puede comprobar las palabras escritas fuera de ella.</p></section>
+  </div>
+</section>
+
+<section id="tab-characters" class="tab">
+  <div class="hero workspaceIntro"><div class="eyebrow">Universo narrativo</div><h2>Fichas de personajes</h2><p>Construye personajes coherentes: su aspecto, motivaciones, conflictos, relaciones e historia. Puedes editarlos, buscarlos y agregarlos al mapa conceptual.</p><div class="status">✦ Tu elenco, siempre disponible sin conexión</div></div>
+  <div class="workspaceNumbers"><div><strong id="characterCount">0</strong><span>Personajes creados</span></div><div><strong id="protagonistCount">0</strong><span>Protagonistas</span></div><div><strong id="characterWords">0</strong><span>Palabras en fichas</span></div></div>
+  <div class="workspaceGrid">
+    <section class="panel"><div class="heading"><div><h3 id="characterFormHeading">Nueva ficha</h3><span class="subtle">Los cambios se guardan en el dispositivo</span></div></div>
+      <div class="formGrid" id="characterForm">
+        <div class="field fullField"><label for="chName">Nombre del personaje *</label><input id="chName" maxlength="90" placeholder="Ej. Lucía Montes"></div>
+        <div class="field"><label for="chRole">Papel</label><select id="chRole"><option>Protagonista</option><option>Antagonista</option><option>Secundario</option><option>Mentor</option><option>Otro</option></select></div>
+        <div class="field"><label for="chAge">Edad o época</label><input id="chAge" maxlength="45" placeholder="Ej. 29 años"></div>
+        <div class="field fullField"><label for="chAliases">Apodo / ocupación</label><input id="chAliases" maxlength="130" placeholder="Ej. La viajera · Profesora"></div>
+        <div class="field fullField"><label for="chLook">Apariencia física</label><textarea id="chLook" maxlength="2500" placeholder="Estatura, rostro, vestimenta, rasgos distintivos..."></textarea></div>
+        <div class="field fullField"><label for="chPersonality">Personalidad</label><textarea id="chPersonality" maxlength="2500" placeholder="Virtudes, defectos, hábitos, manera de hablar..."></textarea></div>
+        <div class="field fullField"><label for="chGoal">Objetivo y motivación</label><textarea id="chGoal" maxlength="2500" placeholder="¿Qué quiere? ¿Por qué lo desea?"></textarea></div>
+        <div class="field fullField"><label for="chConflict">Miedo y conflicto</label><textarea id="chConflict" maxlength="2500" placeholder="¿Qué se interpone en su camino?"></textarea></div>
+        <div class="field fullField"><label for="chPast">Pasado e historia</label><textarea id="chPast" maxlength="3500" placeholder="Origen, acontecimientos decisivos, recuerdos..."></textarea></div>
+        <div class="field fullField"><label for="chArc">Evolución en la historia</label><textarea id="chArc" maxlength="2500" placeholder="¿Cómo cambia desde el comienzo hasta el final?"></textarea></div>
+        <div class="field fullField"><label for="chRelations">Relaciones</label><textarea id="chRelations" maxlength="2500" placeholder="Amigos, familia, enemigos, alianzas..."></textarea></div>
+        <div class="field fullField"><label for="chNotes">Notas y secretos</label><textarea id="chNotes" maxlength="3000" placeholder="Frases, ideas y detalles para recordar..."></textarea></div>
+      </div>
+      <div class="field" style="margin:13px 0 19px"><label>Color del personaje</label><div id="characterColors" class="colorChoices"></div></div>
+      <div class="buttonRow"><button class="btn primary" type="button" id="saveCharacter">✓ Guardar ficha</button><button class="btn" type="button" id="newCharacter">＋ Nueva ficha</button><button class="btn mini" type="button" id="exportCharacters">↓ Exportar fichas TXT</button></div>
+    </section>
+    <section class="panel"><div class="heading"><div><h3>Mis personajes</h3><span class="subtle">Toca «Editar» para recuperar una ficha</span></div></div><div class="field" style="margin-bottom:14px"><label for="characterSearch">Buscar por nombre, papel o descripción</label><input id="characterSearch" placeholder="Buscar personaje..."></div><div id="charactersList" class="characterCards"></div></section>
+  </div>
+</section>
+
+<section id="tab-map" class="tab">
+  <div class="hero workspaceIntro"><div class="eyebrow">Conecta tus ideas</div><h2>Mapas conceptuales interactivos</h2><p>Crea varios mapas, añade conceptos, mueve las tarjetas con el dedo y únelas mediante flechas. También puedes exportar tu mapa como imagen PNG o SVG.</p><div class="status">◇ Arrastra · Conecta · Organiza</div></div>
+  <section class="panel mapHeaderCard" style="margin-bottom:16px">
+    <div class="workspaceToolbar" style="margin-bottom:0"><div class="field"><label for="mapPicker">Mapa actual</label><select id="mapPicker"></select></div><div class="mapActions"><button type="button" class="btn mini primary" id="addMap">＋ Nuevo mapa</button><button type="button" class="btn mini" id="renameMap">Renombrar</button><button type="button" class="btn mini danger" id="deleteMap">Eliminar mapa</button></div></div>
+  </section>
+  <div class="mapGrid">
+    <div class="mapSidebar">
+      <section class="panel"><div class="heading"><div><h3 id="nodeHeading">Nuevo concepto</h3><span class="subtle" id="nodeEditingHint">Crea una tarjeta para el mapa</span></div></div><div class="stackSmall mapForm">
+        <div class="field"><label for="nodeTitle">Concepto *</label><input id="nodeTitle" maxlength="75" placeholder="Ej. Personaje principal"></div>
+        <div class="field"><label for="nodeDetails">Explicación breve</label><textarea id="nodeDetails" maxlength="450" placeholder="Detalles o palabras clave..."></textarea></div>
+        <div class="field"><label>Color</label><div class="colorChoices" id="nodeColors"></div></div>
+        <div class="buttonRow"><button type="button" class="btn primary" id="saveNode">＋ Añadir concepto</button><button type="button" class="btn mini" id="resetNode">Nuevo</button><button type="button" class="btn mini danger" id="deleteNode" disabled>Borrar</button></div>
+      </div></section>
+      <section class="panel"><h3>Conectar conceptos</h3><p class="sectionLead">Escoge dos tarjetas y crea una flecha con su relación.</p><div class="stackSmall mapForm"><div class="field"><label for="edgeFrom">Desde</label><select id="edgeFrom"></select></div><div class="field"><label for="edgeTo">Hasta</label><select id="edgeTo"></select></div><div class="field"><label for="edgeLabel">Relación (opcional)</label><input id="edgeLabel" maxlength="40" placeholder="Ej. causa, pertenece a..."></div><button type="button" class="btn success" id="addEdge">↗ Conectar con flecha</button><button type="button" class="btn mini" id="connectByTouch">◎ Conectar tocando tarjetas</button><span class="sectionHint" id="connectHint">También puedes tocar una tarjeta para editarla.</span><div class="connectionList" id="connectionList"></div></div></section>
+    </div>
+    <section class="panel"><div class="heading"><div><h3>Tu lienzo de ideas</h3><span class="mapCounter" id="mapCount">0 conceptos · 0 conexiones</span></div></div>
+      <div class="buttonRow" style="margin-bottom:13px"><button type="button" class="btn mini primary" id="newConceptShortcut">＋ Concepto</button><button type="button" class="btn mini" id="zoomOut">− Alejar</button><span id="zoomLabel" class="mark">100%</span><button type="button" class="btn mini" id="zoomIn">＋ Acercar</button><button type="button" class="btn mini" id="centerMap">⊙ Centrar</button><button type="button" class="btn mini" id="exportMapPng">↓ PNG</button><button type="button" class="btn mini" id="exportMapSvg">↓ SVG</button></div>
+      <div class="mapViewport" id="mapViewport" aria-label="Lienzo desplazable"><div class="mapCanvas" id="mapCanvas"><svg class="mapLines" id="mapLines" viewBox="0 0 1440 940" aria-hidden="true"></svg><div id="mapNodes"></div></div></div>
+      <p class="mapLegend"><b>Cómo usarlo:</b> crea conceptos desde el formulario. Tócalos para editar o arrástralos para moverlos. En el móvil desliza el espacio vacío para recorrer el mapa. El mapa se guarda automáticamente.</p>
+    </section>
+  </div>
+</section>
+
+<section id="tab-outline" class="tab">
+  <div class="hero workspaceIntro"><div class="eyebrow">Arquitectura de tu obra</div><h2>Trama y capítulos</h2><p>Planea novelas, cuentos, guiones o investigaciones. Organiza el orden, escribe sinopsis y controla qué partes están pendientes, en proceso o terminadas.</p><div class="status">☷ Planifica antes de escribir</div></div>
+  <div class="workspaceNumbers"><div><strong id="chapterCount">0</strong><span>Capítulos o escenas</span></div><div><strong id="finishedCount">0</strong><span>Terminados</span></div><div><strong id="chapterGoalCount">0</strong><span>Palabras previstas</span></div></div>
+  <div class="workspaceGrid reverse"><section class="panel"><h3 id="chapterFormHeading">Nuevo capítulo</h3><p class="sectionLead">Tus capítulos se guardan separados del documento del editor.</p><div class="stackSmall">
+    <div class="field"><label for="chapterTitle">Título del capítulo *</label><input id="chapterTitle" maxlength="110" placeholder="Ej. Capítulo 1: El encuentro"></div>
+    <div class="formGrid"><div class="field"><label for="chapterStatus">Estado</label><select id="chapterStatus"><option>Pendiente</option><option>En proceso</option><option>Terminado</option></select></div><div class="field"><label for="chapterTarget">Meta de palabras</label><input id="chapterTarget" type="number" min="0" max="1000000" step="1" inputmode="numeric" placeholder="1500"></div></div>
+    <div class="field"><label for="chapterSummary">Sinopsis / acontecimientos</label><textarea id="chapterSummary" rows="5" maxlength="4000" placeholder="¿Qué sucede aquí? ¿Cómo empieza y cómo termina?"></textarea></div><div class="field"><label for="chapterNotes">Notas, pistas y pendientes</label><textarea id="chapterNotes" maxlength="3500" placeholder="Personajes, escenarios, cosas que investigar..."></textarea></div><div class="buttonRow"><button class="btn primary" type="button" id="saveChapter">✓ Guardar capítulo</button><button class="btn" type="button" id="newChapter">＋ Nuevo</button></div>
+  </div></section><section class="panel"><div class="heading"><div><h3>Mi estructura</h3><span class="subtle">Reordena con las flechas ↑ y ↓</span></div><button type="button" class="btn mini" id="exportChapters">↓ Exportar plan TXT</button></div><div id="chapterList" class="chapterRows"></div></section></div>
+</section>
+
+<section id="tab-history" class="tab">
+  <div class="hero"><div class="eyebrow">Progreso personal</div><h2>Tu historial de escritura</h2><p>Revisa cuánto has producido y cómo ha evolucionado tu velocidad. Las sesiones se guardan únicamente en este dispositivo.</p></div>
+  <section class="panel"><div class="heading"><div><h3>Resumen acumulado</h3><span class="subtle">Sesiones finalizadas y guardadas</span></div></div><div class="statsList" id="historyTotals"></div></section>
+  <section class="panel" style="margin-top:18px"><div class="heading"><div><h3>Sesiones anteriores</h3><span class="subtle">La más reciente primero</span></div><div class="buttonRow"><button class="btn mini" type="button" id="exportCsv">↓ Exportar CSV</button><button class="btn mini danger" type="button" id="clearHistory">Borrar historial</button></div></div><div class="history" id="historyItems"></div></section>
+</section>
+
+<section id="tab-settings" class="tab">
+  <div class="hero"><div class="eyebrow">Personalización</div><h2>Adapta tu estudio a tu ritmo</h2><p>Define tus metas y deja que la aplicación proteja tu trabajo automáticamente.</p></div>
+  <div class="twoColumns" style="margin-top:0">
+    <section class="panel"><h3>Metas de escritura</h3><p class="sectionLead">Los cambios se aplican inmediatamente al panel en vivo.</p><div class="formGrid"><div class="field"><label for="goalWords">Meta de palabras en el documento</label><input id="goalWords" type="number" min="1" max="10000000" step="1" inputmode="numeric"></div><div class="field"><label for="goalMinutes">Meta de minutos activos</label><input id="goalMinutes" type="number" min="1" max="100000" step="1" inputmode="numeric"></div></div><div class="buttonRow" style="margin-top:15px"><button id="saveGoals" type="button" class="btn primary">Guardar metas</button></div></section>
+    <section class="panel autoBackupPanel"><h3>🛡 Copias de seguridad automáticas</h3><p class="sectionLead">Tus textos, personajes, mapas, capítulos e historial se guardan solos. Se crean además copias internas periódicas de recuperación.</p><div class="backupBox"><div class="backupBadge"><span aria-hidden="true">✓</span><span><b id="backupStatus">Guardado automático activado</b><small id="backupLast">Preparando la primera copia interna…</small></span></div><span class="subtle" id="backupFileStatus">Descargas JSON automáticas según permisos del navegador.</span></div><label class="backupToggle"><input type="checkbox" id="autoDownloadToggle" checked><span><b>Descargar JSON automáticamente</b><small>Al terminar una sesión y periódicamente si sigues escribiendo; el navegador puede bloquear la descarga.</small></span></label><div class="buttonRow"><button id="restoreAutoBackup" type="button" class="btn">↶ Recuperar copia automática</button></div><details class="backupAdvanced"><summary>Opciones adicionales (solo si las necesitas)</summary><p class="subtle">Para cambiar de teléfono, borrar datos del navegador o instalar una versión con otra dirección, conserva un archivo JSON fuera del navegador.</p><div class="buttonRow"><button id="backupJson" type="button" class="btn mini">↓ Descargar JSON ahora</button><button id="restoreJson" type="button" class="btn mini">↑ Importar JSON existente</button></div></details><input id="restoreInput" type="file" accept="application/json,.json" hidden><p class="footerNote">Las copias internas dependen del almacenamiento de este navegador y pueden desaparecer si se borran sus datos. Las descargas a Archivos/Descargas dependen de las restricciones de Android y Chrome. No se envía información a internet.</p></section>
+  </div>
+</section>
+<footer class="footNote">Escritura Métrica PRO · Funciona sin internet · Para Android, computadora o tableta</footer>
+</div><div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(() => {
+'use strict';
+const KEY = 'escritura_metrica_pro_v1'; // Conserva la clave de las versiones anteriores.
+const BACKUP_STORE = 'snapshots', BACKUP_DB = 'escritura_metrica_copias_automaticas', BACKUP_INTERVAL = 120000, DOWNLOAD_INTERVAL = 30*60000;
+const $ = id => document.getElementById(id);
+const formatter = new Intl.NumberFormat('es-CR', {maximumFractionDigits:1});
+const LETTER_RE = /\p{L}/gu;
+const WORD_RE = /[\p{L}\p{N}]+(?:[’'\-][\p{L}\p{N}]+)*/gu;
+const defaults = () => ({
+  version:1, tab:'write', theme:'dark', docTitle:'Mi escritura', document:'', goals:{words:500,minutes:25},
+  auto:{status:'idle',elapsed:0,started:0,wordsAdded:0,lettersAdded:0,charsAdded:0,deleted:0,buckets:{}},
+  manual:{status:'idle',elapsed:0,started:0,words:0,letters:null,note:''},
+  history:[],characters:[],maps:[],activeMapId:null,chapters:[],backupPrefs:{autoDownload:true}
+});
+const clockState = () => ({status:'idle',elapsed:0,started:0,wordsAdded:0,lettersAdded:0,charsAdded:0,deleted:0,buckets:{}});
+let state = defaults();
+let toastTimeout, saveTimeout, previousText = '', lastAnalysis = null, tickCount = 0, chartUnit = 'words';
+let backupTimer=null,lastBackupAt=0,lastBackupJson='',backupDbPromise=null,autoFileAttemptAt=0,autoFileSignature='',lastEditAt=0,firstEditAt=0,autoCheckTick=0;
+const backupFileKey=KEY+'_ultimo_archivo', rescueKey=KEY+'_rescate';
+let storageLoaded=false;
+
+const clampInt = (n,min=0,max=1e8) => Math.min(max,Math.max(min,Number.isFinite(Number(n))?Math.floor(Number(n)):min));
+const nf = n => formatter.format(Number.isFinite(n)?n:0);
+const escapeHtml = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const wordsIn = s => (s.match(WORD_RE)||[]);
+const countLetters = s => (s.match(LETTER_RE)||[]).length;
+const charCount = s => Array.from(s).length;
+const speed = (amount,ms) => ms>0 ? amount*60000/ms : 0;
+function elapsed(x){return (x.elapsed||0)+(x.status==='running' ? Math.max(0,Date.now()-x.started):0);}
+function formatTime(ms){let total=Math.floor(ms/1000), sec=total%60, min=Math.floor(total/60)%60, hrs=Math.floor(total/3600);return (hrs?String(hrs).padStart(2,'0')+':':'')+String(min).padStart(2,'0')+':'+String(sec).padStart(2,'0');}
+function analyze(s){
+  const words=wordsIn(s), letters=s.match(LETTER_RE)||[], frequency=new Map(), wordFrequency=new Map();
+  letters.forEach(l=>{const k=l.toLocaleLowerCase('es');frequency.set(k,(frequency.get(k)||0)+1);});
+  let wordLetters=0,longest='';
+  words.forEach(w=>{let normalized=w.toLocaleLowerCase('es');wordFrequency.set(normalized,(wordFrequency.get(normalized)||0)+1);let n=countLetters(w);wordLetters+=n;if(n>countLetters(longest))longest=w;});
+  return {words:words.length,letters:letters.length,characters:charCount(s),spaces:(s.match(/[ \t]/g)||[]).length,lines:s? s.split(/\r?\n/).length:0,paragraphs:s.trim()?s.trim().split(/\n\s*\n/).length:0,sentences:(s.match(/[.!?]+(?=\s|$)/g)||[]).length,unique:wordFrequency.size,average:words.length?wordLetters/words.length:0,longest,frequency,wordFrequency};
+}
+function normalizeLoaded(data){
+  if(!data || typeof data!=='object' || data.version!==1 || typeof data.document!=='string')return false;
+  const d=defaults();
+  state={...d,...data,goals:{...d.goals,...(data.goals||{})},auto:{...d.auto,...(data.auto||{})},manual:{...d.manual,...(data.manual||{})},backupPrefs:{...d.backupPrefs,...(data.backupPrefs||{})}};
+  state.document=String(state.document||'');state.docTitle=String(state.docTitle||'Mi escritura');
+  if(!Array.isArray(state.history))state.history=[];
+  if(!state.auto.buckets||typeof state.auto.buckets!=='object')state.auto.buckets={};
+  ['auto','manual'].forEach(type=>{if(state[type].status==='running'){state[type].elapsed=elapsed(state[type]);state[type].status='paused';state[type].started=0;}});
+  previousText=state.document;
+  return true;
+}
+function load(){
+  for(const key of [KEY,rescueKey]){
+    try{const raw=localStorage.getItem(key);if(raw && normalizeLoaded(JSON.parse(raw))){storageLoaded=true;return true;}}
+    catch(err){console.warn('Copia local dañada/no disponible:',key,err);}
+  }
+  previousText=state.document;
+  return false;
+}
+function snapshot(){
+  const copy=JSON.parse(JSON.stringify(state));
+  ['auto','manual'].forEach(type=>{if(state[type].status==='running'){copy[type].elapsed=elapsed(state[type]);copy[type].started=0;copy[type].status='paused';}});
+  return copy;
+}
+function snapshotJson(){return JSON.stringify(snapshot());}
+function backupDb(){
+  if(!window.indexedDB)return Promise.resolve(null);
+  if(!backupDbPromise)backupDbPromise=new Promise(resolve=>{
+    try{
+      const r=indexedDB.open(BACKUP_DB,1);
+      r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains(BACKUP_STORE))r.result.createObjectStore(BACKUP_STORE,{keyPath:'id'});};
+      r.onsuccess=()=>resolve(r.result);r.onerror=()=>resolve(null);r.onblocked=()=>resolve(null);
+    }catch(_){resolve(null);}
+  });
+  return backupDbPromise;
+}
+async function readLatestBackup(){
+  const db=await backupDb();if(!db)return null;
+  return new Promise(resolve=>{
+    try{
+      const tx=db.transaction(BACKUP_STORE,'readonly');
+      const req=tx.objectStore(BACKUP_STORE).openCursor(null,'prev');
+      req.onsuccess=()=>resolve(req.result?req.result.value:null);
+      req.onerror=()=>resolve(null);
+    }catch(_){resolve(null);}
+  });
+}
+function readableDate(time){return new Date(time).toLocaleString('es-CR',{dateStyle:'short',timeStyle:'short'});}
+function updateBackupStatus(){
+  const status=$('backupStatus'),last=$('backupLast'),file=$('backupFileStatus');
+  if(status)status.textContent=$('saveLabel')?.textContent?.includes('⚠')?'⚠ Almacenamiento no disponible':'✓ Guardado automático activado';
+  if(last)last.textContent=lastBackupAt?'Última copia interna: '+readableDate(lastBackupAt):'La primera copia se crea automáticamente al comenzar a trabajar.';
+  if(file){
+    let time=0;try{time=Number(localStorage.getItem(backupFileKey)||0);}catch(_){}
+    file.textContent=time?'Último intento de descarga JSON: '+readableDate(time):'El archivo JSON también se intentará descargar automáticamente.';
+  }
+}
+function queueAutoBackup(urgent=false){
+  if(urgent){if(backupTimer){clearTimeout(backupTimer);backupTimer=null;}void createAutoBackup();return;}
+  if(backupTimer)return;
+  const ms=Math.max(7500,BACKUP_INTERVAL-(Date.now()-lastBackupAt));
+  backupTimer=setTimeout(()=>{backupTimer=null;void createAutoBackup();},ms);
+}
+async function createAutoBackup(){
+  // Solo se guardan copias si cambió el estado; mantiene hasta 12 versiones.
+  const json=snapshotJson();if(json===lastBackupJson)return;
+  const db=await backupDb();
+  if(!db){
+    try{if(json.length<1800000)localStorage.setItem(rescueKey,json);}catch(_){/* almacenamiento limitado */}
+    lastBackupAt=Date.now();lastBackupJson=json;updateBackupStatus();return;
+  }
+  const now=Date.now();
+  try{
+    const tx=db.transaction(BACKUP_STORE,'readwrite');const store=tx.objectStore(BACKUP_STORE);
+    store.put({id:now,json,description:state.docTitle,words:wordsIn(state.document).length});
+    const keyRequest=store.getAllKeys();
+    keyRequest.onsuccess=()=>{const keys=keyRequest.result;if(keys.length>12)keys.slice(0,keys.length-12).forEach(key=>store.delete(key));};
+    tx.oncomplete=()=>{lastBackupAt=now;lastBackupJson=json;updateBackupStatus();};
+    tx.onerror=()=>{console.warn('No se pudo completar la copia interna.');try{if(json.length<1800000)localStorage.setItem(rescueKey,json);}catch(_){}};
+  }catch(err){console.warn('Copia interna no disponible',err);}
+}
+function contentSignature(){
+  // Excluye desplazamientos de pestaña y preferencias para no descargar archivos sin cambios de contenido.
+  return JSON.stringify([state.document,state.docTitle,state.characters,state.maps,state.chapters,state.history,state.goals]);
+}
+function autoDownloadJson(force=false){
+  if(!state.backupPrefs.autoDownload)return;
+  const now=Date.now();
+  if(!state.document.trim() && !(state.characters||[]).length && !(state.maps||[]).some(m=>(m.nodes||[]).length) && !(state.chapters||[]).length && !state.history.length)return;
+  const signature=contentSignature();
+  if(signature===autoFileSignature)return;
+  let last=0;try{last=Number(localStorage.getItem(backupFileKey)||0);}catch(_){}
+  const interval=force?0:DOWNLOAD_INTERVAL;
+  if(now-last<interval)return;
+  // Evita descargar una copia al teclear la primera letra; la descarga se inicia por uso normal.
+  if(!force && (!firstEditAt || now-firstEditAt<2*60000))return;
+  try{
+    const name='escritura-auto-'+new Date().toISOString().replace(/[:.]/g,'-').slice(0,19)+'.json';
+    download(name,JSON.stringify(snapshot(),null,2),'application/json;charset=utf-8');
+    autoFileSignature=signature;autoFileAttemptAt=now;
+    try{localStorage.setItem(backupFileKey,String(now));}catch(_){}
+    updateBackupStatus();
+  }catch(err){console.warn('El navegador impidió la descarga automática.',err);}
+}
+function save(){
+  try{
+    localStorage.setItem(KEY,snapshotJson());
+    $('saveLabel').textContent='✓ Guardado automático';
+    queueAutoBackup();
+  }catch(err){$('saveLabel').textContent='⚠ Sin guardar';notify('El almacenamiento está lleno o bloqueado. Descarga una copia JSON.');}
+}
+function scheduleSave(){ $('saveLabel').textContent='◌ Guardando…'; clearTimeout(saveTimeout);saveTimeout=setTimeout(save,500); }
+function notify(msg){let node=$('toast');node.textContent=msg;node.classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>node.classList.remove('show'),3200);}
+function changeTab(tab){if(!['write','manual','characters','map','outline','history','settings'].includes(tab))return;state.tab=tab;document.querySelectorAll('.tab').forEach(n=>n.classList.toggle('active',n.id==='tab-'+tab));document.querySelectorAll('.nav button[data-tab]').forEach(n=>{n.classList.toggle('active',n.dataset.tab===tab);n.setAttribute('aria-current',n.dataset.tab===tab?'page':'false');});if($('moreNav'))$('moreNav').classList.toggle('active',tab==='history'||tab==='settings');if(tab==='history')renderHistory();if(tab==='settings')renderGoalsInputs();if(tab==='map')renderMap();if(tab==='characters')renderCharacters();if(tab==='outline')renderChapters();scheduleSave();}
+function applyTheme(){document.body.classList.toggle('light',state.theme==='light');$('themeBtn').textContent=state.theme==='light'?'☾':'☀';}
+function statusLabel(type){let v=state[type].status;return v==='running'?'Medición en curso':v==='paused'?'Medición pausada':'Cronómetro sin iniciar';}
+function updateButtons(type){const a=state[type],running=a.status==='running',paused=a.status==='paused';$(type+'Start').disabled=running;$(type+'Start').textContent=paused?'▶ Reanudar':'▶ Iniciar';$(type+'Pause').disabled=!running;$(type+'Finish').disabled=a.status==='idle';$(type+'Dot').className='dot'+(running?' running':paused?' paused':'');$(type+'Status').textContent=statusLabel(type);}
+function start(type){const x=state[type];if(x.status==='running')return;x.started=Date.now();x.status='running';updateButtons(type);renderTimes();save();}
+function pause(type){const x=state[type];if(x.status!=='running')return;x.elapsed=elapsed(x);x.status='paused';x.started=0;updateButtons(type);renderTimes();save();}
+function reset(type){
+  const x=state[type];const used=x.status!=='idle'||x.elapsed>0||type==='auto'&&x.wordsAdded>0;
+  if(used&&!confirm('¿Reiniciar esta medición? La sesión sin guardar se perderá.'))return;
+  if(type==='auto')state.auto=clockState();else state.manual={status:'idle',elapsed:0,started:0,words:0,letters:null,note:''};
+  if(type==='manual'){$('manualWords').value='';$('manualLetters').value='';$('manualNote').value='';}
+  updateButtons(type);render();save();
+}
+function finish(type){
+  const x=state[type];if(x.status==='idle')return;
+  if(x.status==='running')pause(type);
+  const ms=elapsed(x);
+  if(ms<1000){notify('Debes medir por lo menos un segundo.');return;}
+  const words=type==='auto'?x.wordsAdded:clampInt(x.words);
+  const letters=type==='auto'?x.lettersAdded:(x.letters==null?null:clampInt(x.letters));
+  if(words===0 && (!letters||letters===0)){
+    if(!confirm('No hay palabras ni letras registradas. ¿Guardar esta sesión vacía?'))return;
+  }
+  const entry={id:Date.now()+'-'+Math.random().toString(36).slice(2,7),date:new Date().toISOString(),mode:type,title:type==='auto'?state.docTitle:(x.note.trim()||'Escritura manual'),durationMs:ms,words,letters,docWords:type==='auto'?analyze(state.document).words:null,byMinute:type==='auto'?{...x.buckets}:null};
+  state.history.unshift(entry);state.history=state.history.slice(0,500);
+  if(type==='auto')state.auto=clockState();else state.manual={status:'idle',elapsed:0,started:0,words:0,letters:null,note:''};
+  if(type==='manual'){$('manualWords').value='';$('manualLetters').value='';$('manualNote').value='';}
+  updateButtons(type);render();save();queueAutoBackup(true);autoDownloadJson(true);notify('Sesión guardada con copia automática.');
+}
+function diffText(before,after){
+  let prefix=0;const lim=Math.min(before.length,after.length);
+  while(prefix<lim&&before[prefix]===after[prefix])prefix++;
+  let suffix=0;while(suffix<before.length-prefix&&suffix<after.length-prefix&&before[before.length-1-suffix]===after[after.length-1-suffix])suffix++;
+  return {added:after.slice(prefix,after.length-suffix),removed:before.slice(prefix,before.length-suffix)};
+}
+function onEditorInput(e){
+  const value=$('editor').value;let old=previousText;state.document=value;previousText=value;
+  const s=state.auto;
+  if(s.status==='running'){
+    const action=e.inputType||'';
+    const isPasteOrSystem=/paste|drop|historyUndo|historyRedo/i.test(action);
+    if(!isPasteOrSystem){
+      const diff=diffText(old,value),newWords=Math.max(0,wordsIn(value).length-wordsIn(old).length),addedLetters=countLetters(diff.added),addedChars=charCount(diff.added);
+      s.wordsAdded+=newWords;s.lettersAdded+=addedLetters;s.charsAdded+=addedChars;s.deleted+=charCount(diff.removed);
+      const bucket=Math.floor(elapsed(s)/60000);
+      const previous=s.buckets[bucket]||{w:0,l:0};
+      const record=typeof previous==='number'?{w:previous,l:0}:previous;
+      s.buckets[bucket]={w:record.w+newWords,l:record.l+addedLetters};
+    }
+  }
+  renderDocument();renderTimes();if(!firstEditAt)firstEditAt=Date.now();lastEditAt=Date.now();scheduleSave();
+}
+function renderDocument(){
+  const a=analyze(state.document);lastAnalysis=a;
+  $('docWords').textContent=nf(a.words);$('docLetters').textContent=nf(a.letters);
+  $('editorFoot').textContent=nf(a.words)+' palabras · '+nf(a.letters)+' letras · '+nf(a.characters)+' caracteres';
+  $('detailedStats').innerHTML=[
+    ['Caracteres (incluye espacios)',a.characters],['Espacios y tabulaciones',a.spaces],['Líneas',a.lines],['Párrafos',a.paragraphs],['Oraciones con puntuación',a.sentences],['Palabras diferentes',a.unique],['Letras por palabra (promedio)',nf(a.average)],['Palabra más larga',a.longest||'—'],['Lectura estimada',a.words?nf(a.words/200)+' min':'0 min'],['Caracteres insertados (sesión)',state.auto.charsAdded]
+  ].map(([name,val])=>'<div class="statItem"><strong>'+escapeHtml(val)+'</strong><span>'+escapeHtml(name)+'</span></div>').join('');
+  const freq=[...a.frequency.entries()].sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0],'es'));
+  const max=freq.length?freq[0][1]:1;
+  $('letters').innerHTML=freq.length?freq.map(([letter,count])=>'<div class="letterItem"><div class="letterLine"><b>'+escapeHtml(letter)+'</b><span>'+nf(count)+' · '+nf(count/a.letters*100)+'%</span></div><div class="miniTrack"><div class="miniFill" style="width:'+count/max*100+'%"></div></div></div>').join(''):'<div class="empty" style="grid-column:1/-1">Escribe para ver cuántas veces aparece cada letra.</div>';
+  const most=[...a.wordFrequency.entries()].sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0],'es')).slice(0,12);
+  $('topWords').innerHTML=most.length?most.map(([w,n])=>'<span class="wordChip">'+escapeHtml(w)+' <b>'+nf(n)+'</b></span>').join(''):'<span class="subtle">Aún no hay palabras.</span>';
+  updateProgress(a.words,elapsed(state.auto));
+}
+function updateProgress(words,ms){
+  const gw=clampInt(state.goals.words,1),gm=clampInt(state.goals.minutes,1);
+  $('wordGoalLabel').textContent=nf(words)+' / '+nf(gw);
+  $('timeGoalLabel').textContent=nf(ms/60000)+' / '+nf(gm)+' min';
+  $('wordProgress').style.width=Math.min(100,words/gw*100)+'%';
+  $('timeProgress').style.width=Math.min(100,ms/60000/gm*100)+'%';
+}
+function renderChart(){
+  const s=state.auto,minutes=Math.max(1,Math.min(120,Math.floor(elapsed(s)/60000)+1,Object.keys(s.buckets).length?Math.max(...Object.keys(s.buckets).map(Number))+1:1));
+  const data=Array.from({length:minutes},(_,i)=>{const bucket=s.buckets[i]||{w:0,l:0};return typeof bucket==='number'?(chartUnit==='words'?bucket:0):Number(chartUnit==='words'?bucket.w:bucket.l)||0;});
+  const greatest=Math.max(1,...data);$('bestMinute').textContent='Mejor minuto: '+(Math.max(...data)?nf(Math.max(...data))+' '+(chartUnit==='words'?'palabras':'letras'):'—');
+  $('minuteChart').innerHTML=data.map((n,i)=>'<div class="chartCol" title="Minuto '+(i+1)+': '+n+' palabras"><span class="barValue">'+nf(n)+'</span><div class="barHolder"><div class="bar" style="height:'+Math.max(3,n/greatest*127)+'px"></div></div><span class="barName">M'+(i+1)+'</span></div>').join('');
+  // 120 columnas como límite visual. Las cifras globales mantienen todos los minutos.
+}
+function renderTimes(){
+  const auto=state.auto,manual=state.manual,ms=elapsed(auto),manualMs=elapsed(manual);
+  $('autoClock').textContent=formatTime(ms);$('manualClock').textContent=formatTime(manualMs);
+  $('autoWordsAdded').textContent=nf(auto.wordsAdded);$('autoLettersAdded').textContent=nf(auto.lettersAdded);$('autoDeleted').textContent=nf(auto.deleted);
+  $('autoWpm').textContent=nf(speed(auto.wordsAdded,ms));$('autoLpm').textContent=nf(speed(auto.lettersAdded,ms));
+  $('manualWpm').textContent=nf(speed(clampInt(manual.words),manualMs));
+  $('manualLpm').textContent=manual.letters===null?'—':nf(speed(clampInt(manual.letters),manualMs));
+  $('manualWph').textContent=nf(speed(clampInt(manual.words),manualMs)*60);
+  $('manualSpw').textContent=manual.words>0&&manualMs>0?nf(manualMs/1000/manual.words):'—';
+  updateProgress((lastAnalysis || analyze(state.document)).words,ms);
+  renderChart();
+}
+function renderHistory(){
+  const h=state.history,words=h.reduce((a,b)=>a+clampInt(b.words),0),letters=h.reduce((a,b)=>a+clampInt(b.letters),0),millis=h.reduce((a,b)=>a+clampInt(b.durationMs),0);
+  $('historyTotals').innerHTML=[['Sesiones guardadas',h.length],['Total de palabras registradas',words],['Total de letras conocidas',letters],['Tiempo total',formatTime(millis)],['Ritmo promedio global',nf(speed(words,millis))+' PPM'],['Mejor ritmo de sesión',nf(Math.max(0,...h.map(x=>speed(x.words,x.durationMs))))+' PPM']].map(([k,v])=>'<div class="statItem"><strong>'+escapeHtml(v)+'</strong><span>'+escapeHtml(k)+'</span></div>').join('');
+  $('historyItems').innerHTML=h.length?h.map(item=>{
+    const dt=new Date(item.date),d=isNaN(dt.getTime())?'Fecha desconocida':dt.toLocaleString('es-CR',{dateStyle:'medium',timeStyle:'short'});
+    return '<div class="historyCard"><div style="min-width:180px;flex:1"><strong>'+escapeHtml(item.title||'Sin título')+'</strong><small>'+(item.mode==='manual'?'⏱ Manual':'✍ Editor')+' · '+escapeHtml(d)+'</small></div><div class="historyMetric"><b>'+nf(item.words)+'</b> palabras · <b>'+nf(speed(item.words,item.durationMs))+'</b> PPM<br><small>'+formatTime(item.durationMs)+' · '+(item.letters==null?'Letras sin medir':nf(item.letters)+' letras')+'</small></div><button class="btn mini danger" data-remove="'+escapeHtml(item.id)+'" type="button" aria-label="Borrar sesión">✕</button></div>';
+  }).join(''):'<div class="empty">Todavía no hay sesiones. Termina una sesión automática o manual para guardarla aquí.</div>';
+}
+function renderGoalsInputs(){ $('goalWords').value=state.goals.words;$('goalMinutes').value=state.goals.minutes; }
+function render(){ $('editor').value=state.document;$('docTitle').value=state.docTitle;$('manualWords').value=state.manual.words||'';$('manualLetters').value=state.manual.letters??'';$('manualNote').value=state.manual.note;applyTheme();updateButtons('auto');updateButtons('manual');renderDocument();renderTimes();renderHistory();renderGoalsInputs(); }
+function download(filename,contents,mime='text/plain;charset=utf-8'){
+  // En APK, Android guarda directamente en Descargas/EscrituraMetrica;
+  // en navegador, conserva la exportación tradicional por Blob.
+  if(window.AndroidFiles && typeof window.AndroidFiles.saveText === 'function'){
+    window.AndroidFiles.saveText(filename,String(contents),mime);
+    return;
+  }
+  const blob=new Blob([contents],{type:mime}),url=URL.createObjectURL(blob);
+  const link=document.createElement('a');link.href=url;link.download=filename;
+  document.body.appendChild(link);link.click();link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function filenameBase(){return (state.docTitle||'mi-escritura').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\w -]/g,'').trim().replace(/\s+/g,'-').slice(0,60)||'mi-escritura';}
+function exportCsv(){
+  if(!state.history.length){notify('Todavía no hay sesiones para exportar.');return;}
+  const rows=[['Fecha','Tipo','Título','Minutos','Palabras','Letras','PPM','LPM']];
+  state.history.forEach(x=>rows.push([new Date(x.date).toLocaleString('es-CR'),x.mode==='manual'?'Manual':'Automático',x.title,(x.durationMs/60000).toFixed(2),x.words,x.letters??'',speed(x.words,x.durationMs).toFixed(2),x.letters==null?'':speed(x.letters,x.durationMs).toFixed(2)]));
+  const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\r\n');
+  download('historial-escritura.csv',csv,'text/csv;charset=utf-8');
+}
+function pauseWhenHidden(){if(document.hidden){let changed=false;['auto','manual'].forEach(t=>{if(state[t].status==='running'){pause(t);changed=true;}});if(changed)notify('Cronómetro pausado al salir de la página.');}}
+/* Herramientas creativas: fichas, mapas y planificación */
+const CREATIVE_COLORS=['#7979f5','#29aa97','#e6a04c','#ce74c4','#4a9cd1','#db727b'];
+const CHAR_FIELDS={name:'chName',role:'chRole',age:'chAge',alias:'chAliases',look:'chLook',personality:'chPersonality',goal:'chGoal',conflict:'chConflict',past:'chPast',arc:'chArc',relations:'chRelations',notes:'chNotes'};
+const CHAPTER_FIELDS={title:'chapterTitle',status:'chapterStatus',target:'chapterTarget',summary:'chapterSummary',notes:'chapterNotes'};
+const freshMap = (title='Mi primer mapa') => ({id:uid(),title,nodes:[],edges:[]});
+const uid=()=>Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,9);
+let editingCharacterId=null,characterColor=CREATIVE_COLORS[0];
+let editingChapterId=null;
+let editingNodeId=null,nodeColor=CREATIVE_COLORS[0],mapZoom=100,connectMode=false,connectFirst=null;
+function sanitizeColors(color){return CREATIVE_COLORS.includes(color)?color:CREATIVE_COLORS[0];}
+function normalizeCreative(){
+  if(!Array.isArray(state.characters))state.characters=[];
+  if(!Array.isArray(state.chapters))state.chapters=[];
+  if(!Array.isArray(state.maps)||!state.maps.length)state.maps=[freshMap()];
+  state.maps=state.maps.filter(m=>m&&typeof m==='object').slice(0,40);
+  if(!state.maps.length)state.maps=[freshMap()];
+  state.maps.forEach(m=>{if(!Array.isArray(m.nodes))m.nodes=[];if(!Array.isArray(m.edges))m.edges=[];if(typeof m.title!=='string')m.title='Mapa sin título';});
+  if(!state.maps.some(m=>m.id===state.activeMapId))state.activeMapId=state.maps[0].id;
+}
+function currentMap(){return state.maps.find(m=>m.id===state.activeMapId)||state.maps[0];}
+function initColorChoices(elId,onChoose,selected){
+  $(elId).innerHTML=CREATIVE_COLORS.map(color=>'<button type="button" class="colorChoice'+(color===selected?' active':'')+'" data-color="'+color+'" style="--swatch:'+color+'" aria-label="Elegir color '+color+'" title="'+color+'"></button>').join('');
+  $(elId).addEventListener('click',e=>{const btn=e.target.closest('[data-color]');if(!btn)return;onChoose(btn.dataset.color);$(elId).querySelectorAll('.colorChoice').forEach(b=>b.classList.toggle('active',b===btn));});
+}
+function setColor(elId,color){$(elId).querySelectorAll('.colorChoice').forEach(b=>b.classList.toggle('active',b.dataset.color===color));}
+function resetCharacter(){
+  editingCharacterId=null;characterColor=CREATIVE_COLORS[0];
+  Object.values(CHAR_FIELDS).forEach(id=>$(id).value='');$('chRole').value='Protagonista';
+  $('characterFormHeading').textContent='Nueva ficha';$('saveCharacter').textContent='✓ Guardar ficha';setColor('characterColors',characterColor);
+}
+function saveCharacter(){
+  const name=$('chName').value.trim();if(!name){notify('Escribe el nombre del personaje.');$('chName').focus();return;}
+  const data={id:editingCharacterId||uid(),color:characterColor};
+  Object.entries(CHAR_FIELDS).forEach(([key,id])=>{data[key]=$(id).value.trim()});
+  if(editingCharacterId){const index=state.characters.findIndex(c=>c.id===editingCharacterId);if(index>=0)state.characters[index]=data;else state.characters.unshift(data);}
+  else {state.characters.unshift(data);editingCharacterId=data.id;}
+  renderCharacters();$('characterFormHeading').textContent='Editando: '+name;$('saveCharacter').textContent='✓ Guardar cambios';save();notify('Ficha de personaje guardada.');
+}
+function editCharacter(id){
+  const data=state.characters.find(c=>c.id===id);if(!data)return;
+  editingCharacterId=data.id;characterColor=sanitizeColors(data.color);Object.entries(CHAR_FIELDS).forEach(([key,field])=>$(field).value=data[key]||'');
+  setColor('characterColors',characterColor);$('characterFormHeading').textContent='Editando: '+data.name;$('saveCharacter').textContent='✓ Guardar cambios';
+  $('tab-characters').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function renderCharacters(){
+  const characters=state.characters;
+  $('characterCount').textContent=nf(characters.length);
+  $('protagonistCount').textContent=nf(characters.filter(c=>c.role==='Protagonista').length);
+  $('characterWords').textContent=nf(characters.reduce((sum,c)=>sum+wordsIn(Object.keys(CHAR_FIELDS).map(k=>c[k]||'').join(' ')).length,0));
+  const search=$('characterSearch').value.trim().toLocaleLowerCase('es');
+  const list=characters.filter(c=>Object.keys(CHAR_FIELDS).some(k=>String(c[k]||'').toLocaleLowerCase('es').includes(search)));
+  $('charactersList').innerHTML=list.length?list.map(c=>{
+    const name=escapeHtml(c.name||'Sin nombre'),color=sanitizeColors(c.color),summary=escapeHtml((c.goal||c.personality||c.past||'Sin descripción todavía.').slice(0,175));
+    return '<article class="characterCard"><div class="characterHead"><span class="characterAvatar" style="background:'+color+'">'+escapeHtml(Array.from(c.name||'?')[0].toUpperCase())+'</span><div><strong>'+name+'</strong><small>'+escapeHtml(c.alias||c.role||'Personaje')+'</small></div></div><p class="characterSummary">'+summary+'</p><div class="characterMeta"><span class="characterTag">'+escapeHtml(c.role||'Personaje')+'</span>'+(c.age?'<span class="characterTag">'+escapeHtml(c.age)+'</span>':'')+'</div><div class="buttonRow"><button class="btn mini primary" data-ch-action="edit" data-id="'+c.id+'">Editar</button><button class="btn mini" data-ch-action="map" data-id="'+c.id+'">↗ Al mapa</button><button class="btn mini danger" data-ch-action="delete" data-id="'+c.id+'">Borrar</button></div></article>';
+  }).join(''):'<div class="empty charactersEmpty">'+(search?'No hay personajes que coincidan con tu búsqueda.':'Crea tu primera ficha de personaje y aparecerá aquí.')+'</div>';
+}
+function exportCharacterSheets(){
+ if(!state.characters.length){notify('Todavía no hay fichas para exportar.');return;}
+ const text=state.characters.map((c,i)=>[`${i+1}. ${c.name||'Personaje'}`,...Object.entries({role:'Papel',age:'Edad / época',alias:'Apodo / ocupación',look:'Apariencia',personality:'Personalidad',goal:'Objetivo y motivación',conflict:'Miedo y conflicto',past:'Historia',arc:'Evolución',relations:'Relaciones',notes:'Notas'}).map(([key,label])=>label+': '+(c[key]||'—'))].join('\n')).join('\n\n'+'─'.repeat(45)+'\n\n');
+ download('fichas-de-personajes.txt',text);
+}
+function resetChapter(){editingChapterId=null;Object.values(CHAPTER_FIELDS).forEach(id=>$(id).value='');$('chapterStatus').value='Pendiente';$('chapterFormHeading').textContent='Nuevo capítulo';$('saveChapter').textContent='✓ Guardar capítulo';}
+function saveChapter(){
+ const title=$('chapterTitle').value.trim();if(!title){notify('Escribe el título del capítulo.');$('chapterTitle').focus();return;}
+ const data={id:editingChapterId||uid()};Object.entries(CHAPTER_FIELDS).forEach(([key,id])=>data[key]=key==='target'?clampInt($(id).value,0,1000000):$(id).value.trim());
+ if(editingChapterId){const idx=state.chapters.findIndex(c=>c.id===editingChapterId);if(idx>=0)state.chapters[idx]=data;else state.chapters.push(data);}else{state.chapters.push(data);editingChapterId=data.id;}
+ renderChapters();$('chapterFormHeading').textContent='Editando: '+title;$('saveChapter').textContent='✓ Guardar cambios';save();notify('Capítulo guardado.');
+}
+function editChapter(id){const c=state.chapters.find(x=>x.id===id);if(!c)return;editingChapterId=id;Object.entries(CHAPTER_FIELDS).forEach(([key,field])=>$(field).value=c[key]??'');$('chapterFormHeading').textContent='Editando: '+c.title;$('saveChapter').textContent='✓ Guardar cambios';$('tab-outline').scrollIntoView({behavior:'smooth',block:'start'});}
+function renderChapters(){
+ const list=state.chapters;
+ $('chapterCount').textContent=nf(list.length);$('finishedCount').textContent=nf(list.filter(c=>c.status==='Terminado').length);$('chapterGoalCount').textContent=nf(list.reduce((a,c)=>a+clampInt(c.target),0));
+ $('chapterList').innerHTML=list.length?list.map((c,i)=>'<article class="chapterRow"><div class="chapterIndex">'+(i+1)+'</div><div><strong>'+escapeHtml(c.title||'Sin título')+'</strong><small>'+escapeHtml((c.summary||'Sin sinopsis').slice(0,240))+'</small><span class="chapterBadge">'+escapeHtml(c.status||'Pendiente')+'</span>'+((+c.target)>0?'<span class="chapterBadge" style="margin-left:5px">'+nf(c.target)+' palabras meta</span>':'')+'</div><div class="chapterButtons"><button class="btn mini" title="Subir capítulo" aria-label="Subir capítulo" data-chapter-action="up" data-id="'+c.id+'" '+(!i?'disabled':'')+'>↑</button><button class="btn mini" title="Bajar capítulo" aria-label="Bajar capítulo" data-chapter-action="down" data-id="'+c.id+'" '+(i===list.length-1?'disabled':'')+'>↓</button><button class="btn mini primary" data-chapter-action="edit" data-id="'+c.id+'">Editar</button><button class="btn mini danger" data-chapter-action="delete" data-id="'+c.id+'">Borrar</button></div></article>').join(''):'<div class="empty">Aún no tienes capítulos. Añade el primero y organiza tu obra.</div>';
+}
+function exportChapterOutline(){if(!state.chapters.length){notify('No hay capítulos para exportar.');return;}download('plan-de-capitulos.txt',state.chapters.map((c,i)=>[`${i+1}. ${c.title}`,`Estado: ${c.status}`,`Meta: ${c.target||0} palabras`,`Sinopsis: ${c.summary||'—'}`,`Notas: ${c.notes||'—'}`].join('\n')).join('\n\n--------------------\n\n'));}
+function renderMapPicker(){const map=currentMap();$('mapPicker').innerHTML=state.maps.map(m=>'<option value="'+escapeHtml(m.id)+'">'+escapeHtml(m.title||'Mapa sin título')+'</option>').join('');$('mapPicker').value=map.id;}
+function resetNodeForm(){editingNodeId=null;nodeColor=CREATIVE_COLORS[0];$('nodeTitle').value='';$('nodeDetails').value='';$('nodeHeading').textContent='Nuevo concepto';$('nodeEditingHint').textContent='Crea una tarjeta para el mapa';$('saveNode').textContent='＋ Añadir concepto';$('deleteNode').disabled=true;setColor('nodeColors',nodeColor);document.querySelectorAll('.conceptNode').forEach(el=>el.classList.remove('selected'));}
+function selectMapNode(id){
+ const n=currentMap().nodes.find(n=>n.id===id);if(!n)return;
+ editingNodeId=n.id;nodeColor=sanitizeColors(n.color);$('nodeTitle').value=n.title||'';$('nodeDetails').value=n.details||'';$('nodeHeading').textContent='Editar concepto';$('nodeEditingHint').textContent='Arrastra la tarjeta en el lienzo para moverla';$('saveNode').textContent='✓ Guardar cambios';$('deleteNode').disabled=false;setColor('nodeColors',nodeColor);
+ document.querySelectorAll('.conceptNode').forEach(el=>el.classList.toggle('selected',el.dataset.id===id));
+}
+function nextNodePosition(){const m=currentMap(),index=m.nodes.length;return {x:70+(index%5)*250,y:75+(Math.floor(index/5)%7)*122};}
+function makeMapNode(title,details,color){const m=currentMap();if(m.nodes.length>=120){notify('Máximo de 120 conceptos por mapa. Crea un mapa nuevo.');return false;}const n={id:uid(),title:title.slice(0,75),details:details.slice(0,450),color:sanitizeColors(color),...nextNodePosition()};m.nodes.push(n);resetNodeForm();renderMap();selectMapNode(n.id);save();return true;}
+function saveNode(){const title=$('nodeTitle').value.trim();if(!title){notify('Escribe el título del concepto.');$('nodeTitle').focus();return;}
+ const details=$('nodeDetails').value.trim();if(editingNodeId){const n=currentMap().nodes.find(n=>n.id===editingNodeId);if(n){n.title=title;n.details=details;n.color=nodeColor;renderMap();selectMapNode(n.id);save();notify('Concepto actualizado.');return;}}
+ if(makeMapNode(title,details,nodeColor))notify('Concepto añadido. Puedes arrastrarlo por el mapa.');
+}
+function removeNode(){if(!editingNodeId)return;const m=currentMap(),n=m.nodes.find(n=>n.id===editingNodeId);if(!n||!confirm('¿Borrar el concepto «'+n.title+'» y sus conexiones?'))return;m.nodes=m.nodes.filter(x=>x.id!==n.id);m.edges=m.edges.filter(e=>e.from!==n.id&&e.to!==n.id);resetNodeForm();renderMap();save();}
+function updateConnectionSelectors(){
+ const m=currentMap(),from=$('edgeFrom').value,to=$('edgeTo').value;
+ const options='<option value="">Seleccionar...</option>'+m.nodes.map(n=>'<option value="'+n.id+'">'+escapeHtml(n.title)+'</option>').join('');
+ $('edgeFrom').innerHTML=options;$('edgeTo').innerHTML=options;
+ $('edgeFrom').value=m.nodes.some(n=>n.id===from)?from:'';$('edgeTo').value=m.nodes.some(n=>n.id===to)?to:'';
+ $('connectionList').innerHTML=m.edges.length?m.edges.map(e=>{
+ const n1=m.nodes.find(n=>n.id===e.from),n2=m.nodes.find(n=>n.id===e.to);
+ return '<div class="connectionItem"><span>'+escapeHtml(n1?.title||'?')+' → '+escapeHtml(n2?.title||'?')+(e.label?' · '+escapeHtml(e.label):'')+'</span><button type="button" aria-label="Borrar conexión" title="Borrar conexión" data-edge-id="'+e.id+'">✕</button></div>';
+ }).join(''):'<span class="sectionHint">Sin conexiones todavía.</span>';
+}
+function addMapEdge(from,to,label=''){
+ const m=currentMap();if(!from||!to||from===to){notify('Elige dos conceptos diferentes.');return false;}
+ if(!m.nodes.some(n=>n.id===from)||!m.nodes.some(n=>n.id===to)){notify('Selecciona dos conceptos existentes.');return false;}
+ if(m.edges.some(e=>e.from===from&&e.to===to)){notify('Ya existe una conexión en esa dirección.');return false;}
+ m.edges.push({id:uid(),from,to,label:label.slice(0,40)});renderEdges();updateConnectionSelectors();save();notify('Conexión creada.');return true;
+}
+function renderEdges(){
+ const m=currentMap(),r=[];
+ m.edges.forEach(e=>{
+ const a=m.nodes.find(n=>n.id===e.from),b=m.nodes.find(n=>n.id===e.to);if(!a||!b)return;
+ const ax=a.x+101,ay=a.y+47,bx=b.x+101,by=b.y+47,dx=bx-ax,dy=by-ay,d=Math.hypot(dx,dy);if(d<2)return;
+ const ux=dx/d,uy=dy/d;
+ const t=Math.min(102/(Math.abs(ux)||.0001),48/(Math.abs(uy)||.0001));
+ const fromX=ax+ux*t,fromY=ay+uy*t,toX=bx-ux*t,toY=by-uy*t;
+ r.push('<path d="M '+fromX.toFixed(1)+' '+fromY.toFixed(1)+' L '+toX.toFixed(1)+' '+toY.toFixed(1)+'" stroke="'+sanitizeColors(a.color)+'" stroke-width="3.5" fill="none" marker-end="url(#mapArrow)"/>');
+ if(e.label){const midX=(fromX+toX)/2,midY=(fromY+toY)/2-8,label=e.label.slice(0,32);r.push('<rect x="'+(midX-8-label.length*3.5).toFixed(1)+'" y="'+(midY-12).toFixed(1)+'" width="'+(16+label.length*7)+'" height="22" rx="8" fill="'+(state.theme==='light'?'#fff':'#171c2e')+'" stroke="'+(state.theme==='light'?'#dadee9':'#323b54')+'"/><text x="'+midX.toFixed(1)+'" y="'+(midY+3).toFixed(1)+'" text-anchor="middle" fill="'+(state.theme==='light'?'#29334e':'#f1f3ff')+'" font-size="12" font-family="sans-serif">'+escapeHtml(label)+'</text>');}
+ });
+ $('mapLines').innerHTML='<defs><marker id="mapArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 Z" fill="'+(state.theme==='light'?'#616e92':'#c8d0f1')+'"/></marker></defs>'+r.join('');
+}
+function renderMap(){
+ normalizeCreative();const m=currentMap();renderMapPicker();
+ $('mapNodes').innerHTML=m.nodes.map(n=>'<div class="conceptNode'+(n.id===editingNodeId?' selected':'')+'" data-id="'+n.id+'" role="button" tabindex="0" aria-label="Concepto '+escapeHtml(n.title)+'" style="left:'+clampInt(n.x,0,1225)+'px;top:'+clampInt(n.y,0,820)+'px;--nodeColor:'+sanitizeColors(n.color)+'"><span class="nodeStripe"></span><strong>'+escapeHtml(n.title)+'</strong><small>'+escapeHtml(n.details||'Toca para editar · arrastra para mover')+'</small></div>').join('');
+ renderEdges();updateConnectionSelectors();$('mapCount').textContent=m.nodes.length+' conceptos · '+m.edges.length+' conexiones';$('mapCanvas').style.zoom=mapZoom+'%';$('zoomLabel').textContent=mapZoom+'%';
+}
+function switchMap(id){if(!state.maps.some(m=>m.id===id))return;state.activeMapId=id;connectMode=false;connectFirst=null;resetNodeForm();resetConnectMode();renderMap();save();}
+function resetConnectMode(){connectMode=false;connectFirst=null;$('connectByTouch').classList.remove('primary');$('connectByTouch').textContent='◎ Conectar tocando tarjetas';$('connectHint').textContent='También puedes tocar una tarjeta para editarla.';document.querySelectorAll('.conceptNode').forEach(el=>el.classList.remove('connectSelected'));}
+function toggleConnectMode(){if(connectMode){resetConnectMode();return;}if(currentMap().nodes.length<2){notify('Primero crea al menos dos conceptos.');return;}connectMode=true;connectFirst=null;$('connectByTouch').classList.add('primary');$('connectByTouch').textContent='✕ Salir del modo conectar';$('connectHint').textContent='Toca el primer concepto y después el segundo para dibujar la flecha.';}
+function tapNode(id){if(!connectMode){selectMapNode(id);return;}if(!connectFirst){connectFirst=id;const n=currentMap().nodes.find(n=>n.id===id);$('connectHint').textContent='Ahora toca el segundo concepto para conectar con «'+(n?.title||'')+'».';document.querySelectorAll('.conceptNode').forEach(el=>el.classList.toggle('connectSelected',el.dataset.id===id));return;}
+ if(connectFirst!==id)addMapEdge(connectFirst,id,$('edgeLabel').value.trim());resetConnectMode();}
+function centerMap(){const vp=$('mapViewport'),m=currentMap();if(!m.nodes.length){vp.scrollLeft=0;vp.scrollTop=0;return;}const minX=Math.min(...m.nodes.map(n=>n.x)),minY=Math.min(...m.nodes.map(n=>n.y));vp.scrollTo({left:Math.max(0,(minX-40)*mapZoom/100),top:Math.max(0,(minY-40)*mapZoom/100),behavior:'smooth'});}
+function mapAsSvg(){
+ const m=currentMap(),nodes=m.nodes,edges=m.edges;
+ const width=Math.max(620,Math.min(1440,Math.max(...nodes.map(n=>clampInt(n.x)+250),620))),height=Math.max(390,Math.min(940,Math.max(...nodes.map(n=>clampInt(n.y)+150),390)));
+ const eout=edges.map(e=>{const a=nodes.find(n=>n.id===e.from),b=nodes.find(n=>n.id===e.to);if(!a||!b)return '';const ax=a.x+101,ay=a.y+49,bx=b.x+101,by=b.y+49,dx=bx-ax,dy=by-ay,d=Math.hypot(dx,dy)||1,ux=dx/d,uy=dy/d,t=Math.min(102/(Math.abs(ux)||.0001),49/(Math.abs(uy)||.0001)),x1=ax+ux*t,y1=ay+uy*t,x2=bx-ux*t,y2=by-uy*t;const mx=(x1+x2)/2,my=(y1+y2)/2;return '<path d="M'+x1+','+y1+'L'+x2+','+y2+'" stroke="'+sanitizeColors(a.color)+'" stroke-width="3" fill="none" marker-end="url(#arr)"/>'+(e.label?'<rect x="'+(mx-90)+'" y="'+(my-23)+'" width="180" height="27" rx="8" fill="#fff" stroke="#dfe4ed"/><text x="'+mx+'" y="'+(my-5)+'" font-family="Arial" font-size="13" text-anchor="middle" fill="#333">'+escapeHtml(e.label.slice(0,32))+'</text>':'');}).join('');
+ const nout=nodes.map(n=>{const x=clampInt(n.x),y=clampInt(n.y),parts=(n.details||'').slice(0,90).match(/.{1,31}(?:\s|$)|.{1,31}/gu)||[];
+ return '<rect x="'+x+'" y="'+y+'" width="202" height="99" rx="15" fill="#fff" stroke="'+sanitizeColors(n.color)+'" stroke-width="2"/><rect x="'+x+'" y="'+y+'" width="6" height="99" rx="3" fill="'+sanitizeColors(n.color)+'"/><text x="'+(x+17)+'" y="'+(y+30)+'" font-family="Arial" font-size="14" font-weight="bold" fill="#161b30">'+escapeHtml((n.title||'').slice(0,26))+'</text>'+parts.slice(0,2).map((p,i)=>'<text x="'+(x+17)+'" y="'+(y+54+i*16)+'" font-family="Arial" font-size="11" fill="#58627d">'+escapeHtml(p.trim())+'</text>').join('');}).join('');
+ return '<svg xmlns="http://www.w3.org/2000/svg" width="'+width+'" height="'+height+'" viewBox="0 0 '+width+' '+height+'"><defs><marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8Z" fill="#687494"/></marker></defs><rect width="100%" height="100%" fill="#f6f7fc"/><text x="30" y="32" font-family="Arial" font-size="17" font-weight="bold" fill="#44516f">'+escapeHtml(m.title)+'</text>'+eout+nout+'</svg>';
+}
+function mapFileBase(){return(currentMap().title||'mapa-conceptual').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\w -]/g,'').trim().replace(/\s+/g,'-').slice(0,55)||'mapa-conceptual';}
+function exportMapSvg(){download(mapFileBase()+'.svg',mapAsSvg(),'image/svg+xml;charset=utf-8');notify('Mapa exportado en SVG.');}
+function exportMapPng(){
+ const svg=mapAsSvg(),url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml;charset=utf-8'})),img=new Image();
+ img.onload=()=>{try{const canvas=document.createElement('canvas');canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0);canvas.toBlob(blob=>{if(!blob){notify('No se pudo crear PNG; exporta el SVG.');return;}if(window.AndroidFiles && typeof window.AndroidFiles.saveBase64 === 'function'){
+          const reader=new FileReader();
+          reader.onload=()=>{const base64=String(reader.result||'').split(',')[1]||'';
+            window.AndroidFiles.saveBase64(mapFileBase()+'.png',base64,'image/png');
+            notify('Mapa guardado en Descargas/EscrituraMetrica.');
+          };
+          reader.onerror=()=>notify('No se pudo guardar el PNG.');
+          reader.readAsDataURL(blob);
+        }else{
+          const a=document.createElement('a'),obj=URL.createObjectURL(blob);
+          a.href=obj;a.download=mapFileBase()+'.png';a.click();
+          setTimeout(()=>URL.revokeObjectURL(obj),2500);
+          notify('Mapa exportado como imagen PNG.');
+        }},'image/png');}catch(err){notify('No se pudo crear PNG; puedes exportar SVG.');}finally{URL.revokeObjectURL(url);}};
+ img.onerror=()=>{URL.revokeObjectURL(url);notify('No se pudo exportar PNG; utiliza SVG.');};img.src=url;
+}
+function addCharacterToMap(id){const c=state.characters.find(c=>c.id===id);if(!c)return;changeTab('map');if(makeMapNode(c.name,([c.role,c.goal].filter(Boolean).join(' · ')||'Personaje'),c.color))notify('Personaje añadido al mapa conceptual.');}
+function setCreativeEvents(){
+ initColorChoices('characterColors',v=>characterColor=v,characterColor);initColorChoices('nodeColors',v=>nodeColor=v,nodeColor);
+ $('saveCharacter').addEventListener('click',saveCharacter);$('newCharacter').addEventListener('click',resetCharacter);$('characterSearch').addEventListener('input',renderCharacters);$('exportCharacters').addEventListener('click',exportCharacterSheets);
+ $('charactersList').addEventListener('click',e=>{const btn=e.target.closest('[data-ch-action]');if(!btn)return;const id=btn.dataset.id,action=btn.dataset.chAction;if(action==='edit')editCharacter(id);if(action==='map')addCharacterToMap(id);if(action==='delete'){const c=state.characters.find(c=>c.id===id);if(c&&confirm('¿Borrar la ficha de «'+c.name+'»?')){state.characters=state.characters.filter(x=>x.id!==id);if(editingCharacterId===id)resetCharacter();renderCharacters();save();}}});
+ $('saveChapter').addEventListener('click',saveChapter);$('newChapter').addEventListener('click',resetChapter);$('exportChapters').addEventListener('click',exportChapterOutline);
+ $('chapterList').addEventListener('click',e=>{const btn=e.target.closest('[data-chapter-action]');if(!btn)return;const id=btn.dataset.id,action=btn.dataset.chapterAction,index=state.chapters.findIndex(c=>c.id===id);if(index<0)return;
+ if(action==='edit'){editChapter(id);return;}if(action==='delete'){if(!confirm('¿Borrar este capítulo del plan?'))return;state.chapters.splice(index,1);if(editingChapterId===id)resetChapter();}
+ if(action==='up'&&index>0){[state.chapters[index-1],state.chapters[index]]=[state.chapters[index],state.chapters[index-1]];}
+ if(action==='down'&&index<state.chapters.length-1){[state.chapters[index+1],state.chapters[index]]=[state.chapters[index],state.chapters[index+1]];}
+ renderChapters();save();});
+ $('mapPicker').addEventListener('change',()=>switchMap($('mapPicker').value));
+ $('addMap').addEventListener('click',()=>{if(state.maps.length>=40){notify('Máximo de 40 mapas.');return;}const title=prompt('¿Cómo se llamará tu mapa?',`Nuevo mapa ${state.maps.length+1}`);if(title===null)return;const m=freshMap(title.trim().slice(0,80)||'Mapa sin título');state.maps.push(m);switchMap(m.id);notify('Mapa creado.');});
+ $('renameMap').addEventListener('click',()=>{const m=currentMap(),name=prompt('Nuevo nombre del mapa:',m.title);if(name===null)return;m.title=name.trim().slice(0,80)||m.title;renderMapPicker();save();});
+ $('deleteMap').addEventListener('click',()=>{const m=currentMap();if(!confirm('¿Eliminar el mapa «'+m.title+'» y todas sus tarjetas y conexiones?'))return;state.maps=state.maps.filter(x=>x.id!==m.id);if(!state.maps.length)state.maps=[freshMap()];switchMap(state.maps[0].id);});
+ $('saveNode').addEventListener('click',saveNode);$('resetNode').addEventListener('click',resetNodeForm);$('deleteNode').addEventListener('click',removeNode);
+ $('addEdge').addEventListener('click',()=>addMapEdge($('edgeFrom').value,$('edgeTo').value,$('edgeLabel').value.trim()));
+ $('connectByTouch').addEventListener('click',toggleConnectMode);$('connectionList').addEventListener('click',e=>{const btn=e.target.closest('[data-edge-id]');if(!btn)return;const m=currentMap();m.edges=m.edges.filter(edge=>edge.id!==btn.dataset.edgeId);renderMap();save();});
+ $('zoomOut').addEventListener('click',()=>{mapZoom=Math.max(60,mapZoom-10);renderMap();});$('zoomIn').addEventListener('click',()=>{mapZoom=Math.min(150,mapZoom+10);renderMap();});$('centerMap').addEventListener('click',centerMap);
+ $('exportMapSvg').addEventListener('click',exportMapSvg);$('exportMapPng').addEventListener('click',exportMapPng);
+ let gesture=null;
+ $('mapNodes').addEventListener('pointerdown',e=>{
+   const el=e.target.closest('.conceptNode');if(!el)return;
+   if(e.button!==0)return;
+   const n=currentMap().nodes.find(n=>n.id===el.dataset.id);if(!n)return;
+   gesture={id:n.id,pointerId:e.pointerId,startX:e.clientX,startY:e.clientY,x:n.x,y:n.y,moved:false,el};
+   el.setPointerCapture(e.pointerId);
+ });
+ $('mapNodes').addEventListener('pointermove',e=>{
+   const g=gesture;if(!g||g.pointerId!==e.pointerId||connectMode)return;
+   const dx=e.clientX-g.startX,dy=e.clientY-g.startY;
+   if(Math.hypot(dx,dy)>5)g.moved=true;
+   if(!g.moved)return;
+   const n=currentMap().nodes.find(n=>n.id===g.id);if(!n)return;
+   n.x=clampInt(g.x+dx/(mapZoom/100),0,1235);n.y=clampInt(g.y+dy/(mapZoom/100),0,830);
+   g.el.style.left=n.x+'px';g.el.style.top=n.y+'px';renderEdges();
+ });
+ function endGesture(e){const g=gesture;if(!g||e.pointerId!==g.pointerId)return;gesture=null;if(g.moved){save();selectMapNode(g.id);}else tapNode(g.id);}
+ $('mapNodes').addEventListener('pointerup',endGesture);$('mapNodes').addEventListener('pointercancel',e=>{if(gesture&&gesture.pointerId===e.pointerId){if(gesture.moved)save();gesture=null;}});
+ $('mapNodes').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const el=e.target.closest('.conceptNode');if(el){e.preventDefault();tapNode(el.dataset.id);}}});
+}
+function refreshCreative(){normalizeCreative();editingCharacterId=null;editingChapterId=null;editingNodeId=null;resetCharacter();resetChapter();resetNodeForm();renderCharacters();renderChapters();renderMap();}
+
+function setInitialUI(){
+  document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>changeTab(b.dataset.tab)));
+  $('themeBtn').addEventListener('click',()=>{state.theme=state.theme==='light'?'dark':'light';applyTheme();renderEdges();save();});
+  [['chartWords','words'],['chartLetters','letters']].forEach(([id,type])=>$(id).addEventListener('click',()=>{chartUnit=type;$('chartWords').classList.toggle('primary',type==='words');$('chartLetters').classList.toggle('primary',type==='letters');renderChart();}));
+  $('editor').addEventListener('input',onEditorInput);
+  $('docTitle').addEventListener('input',()=>{state.docTitle=$('docTitle').value.slice(0,120);scheduleSave();});
+  ['auto','manual'].forEach(type=>{
+    $(type+'Start').addEventListener('click',()=>start(type));
+    $(type+'Pause').addEventListener('click',()=>pause(type));
+    $(type+'Finish').addEventListener('click',()=>finish(type));
+    $(type+'Reset').addEventListener('click',()=>reset(type));
+  });
+  $('newDoc').addEventListener('click',()=>{
+    if(state.document && !confirm('¿Crear un texto nuevo? Se borrará el documento actual. Descárgalo antes si deseas conservarlo.'))return;
+    if(state.auto.status!=='idle')pause('auto');
+    state.document='';previousText='';state.docTitle='Mi escritura';$('docTitle').value=state.docTitle;$('editor').value='';renderDocument();scheduleSave();notify('Documento nuevo. La sesión conserva lo medido hasta ahora.');
+  });
+  $('exportText').addEventListener('click',()=>download(filenameBase()+'.txt',state.document));
+  $('importText').addEventListener('click',()=>$('fileInput').click());
+  $('fileInput').addEventListener('change',async e=>{
+    const file=e.target.files?.[0];if(!file)return;
+    if(file.size>4*1024*1024){notify('El límite de importación es 4 MB.');e.target.value='';return;}
+    if(state.document&&!confirm('¿Reemplazar el documento actual con el archivo TXT?')){e.target.value='';return;}
+    if(state.auto.status==='running')pause('auto');
+    try{state.document=await file.text();previousText=state.document;state.docTitle=file.name.replace(/\.txt$/i,'').slice(0,120);$('editor').value=state.document;$('docTitle').value=state.docTitle;renderDocument();save();notify('Texto importado correctamente.');}catch(error){notify('No se pudo leer el archivo.');}
+    e.target.value='';
+  });
+  const manualInputs=[['manualWords','words'],['manualLetters','letters'],['manualNote','note']];
+  manualInputs.forEach(([id,key])=>$(id).addEventListener('input',()=>{
+    state.manual[key]=key==='note'?$(id).value.slice(0,120):($(id).value===''&&key==='letters'?null:clampInt($(id).value));renderTimes();scheduleSave();
+  }));
+  $('saveGoals').addEventListener('click',()=>{
+    state.goals.words=clampInt($('goalWords').value,1,10000000);state.goals.minutes=clampInt($('goalMinutes').value,1,100000);renderGoalsInputs();renderTimes();save();notify('Metas guardadas.');
+  });
+  $('exportCsv').addEventListener('click',exportCsv);
+  $('clearHistory').addEventListener('click',()=>{if(!state.history.length)return;if(confirm('¿Borrar todo el historial de sesiones? Esta acción no se puede deshacer.')){state.history=[];renderHistory();save();notify('Historial borrado.');}});
+  $('historyItems').addEventListener('click',e=>{const btn=e.target.closest('[data-remove]');if(!btn)return;if(confirm('¿Borrar esta sesión del historial?')){state.history=state.history.filter(x=>x.id!==btn.dataset.remove);renderHistory();save();}});
+  $('autoDownloadToggle').checked=state.backupPrefs.autoDownload!==false;
+  $('autoDownloadToggle').addEventListener('change',()=>{state.backupPrefs.autoDownload=$('autoDownloadToggle').checked;save();notify(state.backupPrefs.autoDownload?'Descargas automáticas activadas.':'Descargas JSON automáticas desactivadas. Las copias internas siguen activas.');});
+  $('restoreAutoBackup').addEventListener('click',async()=>{
+    const last=await readLatestBackup();
+    if(!last){notify('No se encontró una copia interna recuperable.');return;}
+    if(!confirm('¿Recuperar la copia automática de '+readableDate(last.id)+'? Reemplazará los datos actuales.'))return;
+    try{
+      if(!normalizeLoaded(JSON.parse(last.json)))throw Error('No compatible');
+      normalizeCreative();refreshCreative();render();changeTab('write');save();notify('Copia automática recuperada.');
+    }catch(_){notify('La copia interna está dañada o no es compatible.');}
+  });
+  $('backupJson').addEventListener('click',()=>download('copia-escritura-metrica-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify(snapshot(),null,2),'application/json;charset=utf-8'));
+  $('restoreJson').addEventListener('click',()=>$('restoreInput').click());
+  $('restoreInput').addEventListener('change',async e=>{
+    const f=e.target.files?.[0];if(!f)return;
+    if(f.size>8*1024*1024){notify('Copia demasiado grande (máximo 8 MB).');e.target.value='';return;}
+    try{
+      const data=JSON.parse(await f.text());
+      if(!data||data.version!==1||typeof data.document!=='string'||!Array.isArray(data.history)||!data.auto||!data.manual||!data.goals)throw Error('Copia no compatible');
+      if(confirm('¿Restaurar la copia? Reemplazará el documento y el historial actual.')){
+        state={...defaults(),...data,goals:{...defaults().goals,...data.goals},auto:{...clockState(),...data.auto},manual:{...defaults().manual,...data.manual},backupPrefs:{...defaults().backupPrefs,...(data.backupPrefs||{})}};
+        ['auto','manual'].forEach(t=>{state[t].status='paused';state[t].started=0;});
+        state.history=state.history.slice(0,500);previousText=state.document;normalizeCreative();refreshCreative();render();changeTab('write');save();notify('Copia restaurada.');
+      }
+    }catch(err){notify('Ese archivo no es una copia compatible.');}
+    e.target.value='';
+  });
+  $('editor').addEventListener('blur',()=>{if(Date.now()-firstEditAt>2*60000)autoDownloadJson();});
+  // En Chrome Android las descargas iniciadas sin interacción pueden requerir permiso o bloquearse.
+  window.addEventListener('pointerup',()=>{if(firstEditAt)autoDownloadJson();},{passive:true});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){save();queueAutoBackup(true);}});
+  document.addEventListener('visibilitychange',pauseWhenHidden);
+  window.addEventListener('pagehide',()=>{if(state.auto.status==='running'||state.manual.status==='running'){['auto','manual'].forEach(t=>{if(state[t].status==='running')pause(t);});}save();queueAutoBackup(true);});
+  setInterval(()=>{
+    if(state.auto.status==='running'||state.manual.status==='running'){renderTimes();if(++tickCount%5===0)save();}
+    if(++autoCheckTick%60===0 && lastEditAt && Date.now()-lastEditAt>2*60000)autoDownloadJson();
+  },1000);
+}
+
+function upgradeResponsiveLayout(){
+  const studio=document.querySelector('#tab-write .studioLayout');
+  if(!studio||document.getElementById('advancedAnalytics'))return;
+  const all=[...studio.querySelectorAll(':scope > .stack > .panel')];
+  const extra=all.filter(panel=>!panel.querySelector('#editor'));
+  const wrap=document.createElement('details');wrap.id='advancedAnalytics';wrap.className='advancedAnalytics';
+  wrap.innerHTML='<summary><span class="foldSymbol" aria-hidden="true">▥</span><span><b>Estadísticas completas</b><small>Velocidad, gráficos, letras y metas</small></span><span class="foldArrow" aria-hidden="true">⌄</span></summary><div class="advancedGrid"></div>';
+  studio.after(wrap);
+  extra.forEach(panel=>wrap.querySelector('.advancedGrid').appendChild(panel));
+  const stacks=studio.querySelectorAll(':scope > .stack');if(stacks[1])stacks[1].remove();
+  wrap.open=window.innerWidth>=1100;
+  syncCompactStats();
+}
+function syncCompactStats(){
+  const refs=[['quickWords','docWords'],['quickLetters','docLetters'],['quickPpm','autoWpm'],['quickTime','autoClock']];
+  refs.forEach(([dest,source])=>{const target=$(dest),from=$(source);if(target&&from&&target.textContent!==from.textContent)target.textContent=from.textContent;});
+}
+function initMobileFeatures(){
+  upgradeResponsiveLayout();
+  const watch=['docWords','docLetters','autoWpm','autoClock'];
+  const ob=new MutationObserver(syncCompactStats);
+  watch.forEach(id=>{const node=$(id);if(node)ob.observe(node,{childList:true,characterData:true,subtree:true});});
+  const more=$('moreMenu');const trigger=$('moreNav');
+  function closeMore(){more.hidden=true;trigger.setAttribute('aria-expanded','false');}
+  trigger.addEventListener('click',()=>{more.hidden=!more.hidden;trigger.setAttribute('aria-expanded',String(!more.hidden));});
+  more.querySelectorAll('[data-tab]').forEach(button=>button.addEventListener('click',()=>{const dst=document.querySelector('.nav [data-tab="'+button.dataset.tab+'"]');if(dst)dst.click();closeMore();}));
+  document.addEventListener('click',event=>{if(!more.hidden&&!more.contains(event.target)&&!trigger.contains(event.target))closeMore();});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape')closeMore();});
+  document.querySelectorAll('.nav button[data-tab]').forEach(button=>button.addEventListener('click',()=>{
+    if(!button.classList.contains('navHidden')){
+      closeMore();const section=document.querySelector('#tab-'+button.dataset.tab);if(section)section.scrollTop=0;
+    }
+  }));
+  $('statsShortcut').addEventListener('click',()=>{changeTab('write');const advanced=$('advancedAnalytics');advanced.open=true;advanced.scrollIntoView({behavior:'smooth',block:'start'});});
+  $('newConceptShortcut').addEventListener('click',()=>{$('nodeTitle').scrollIntoView({behavior:'smooth',block:'center'});$('nodeTitle').focus({preventScroll:true});});
+  syncCompactStats();
+}
+
+async function startApp(){
+  // Recuperación automática si la copia principal está dañada y existe respaldo en el mismo origen.
+  const found=load();
+  if(!found){
+    const last=await readLatestBackup();
+    if(last){try{normalizeLoaded(JSON.parse(last.json));}catch(err){console.warn('Copia automática no recuperable',err);}}
+  }
+  const recent=await readLatestBackup();if(recent)lastBackupAt=recent.id;
+  try{autoFileAttemptAt=Number(localStorage.getItem(backupFileKey)||0);}catch(_){}
+  normalizeCreative();setInitialUI();setCreativeEvents();refreshCreative();initMobileFeatures();render();
+  changeTab(['write','manual','characters','map','outline','history','settings'].includes(state.tab)?state.tab:'write');
+  updateBackupStatus();
+  // El primer respaldo interno empieza pronto, sin ningún botón manual.
+  queueAutoBackup();
+}
+void startApp();
+})();
+</script>
+</body>
+</html>
